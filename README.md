@@ -1,15 +1,14 @@
 # Orinoco #
 
-This is the back end server for Project 5 of the Junior Web Developer path.
 
-### Prerequisites ###
+This is Project 5 from the Openclassrooms Web Developer Path. Here, the focus was more on the back-end, although the front-end did play a role too. It's an e-commerce website including a list view page showing all the items, a single product page, a cart page and a confirmation page. 
 
-You will need to have Node and `npm` installed locally on your machine.
+I didn't use any frameworks or libraries to build the website.
 
-### Installation ###
+The server was already built by the OCC team, so my mission was to get all the data from the server using GET requests to show the products on the list view page and to use URL query parameters to create a single product page for all the various items. 
 
-Clone this repo. From within the project folder, run `npm install`. You 
-can then run the server with `node server`. 
-The server should run on `localhost` with default port `3000`. If the
-server runs on another port for any reason, this is printed to the
-console when the server starts, e.g. `Listening on port 3001`.
+I used the localstorage JS functionality to save and add the products to the cart, and redirected the user to a confirmation page using a POST request with validated contact details.
+
+Unfortunately, I only pushed the whole project to this remote repository after having finished around 60% of it.
+
+Part of the project was also a test plan which should cover at least 80% of the front-end code base.
