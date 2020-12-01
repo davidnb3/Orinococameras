@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Krub:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/e988a1ca9d.js" crossorigin="anonymous"></script>
+    <title>Orinoco</title>
+</head>
+<body>
+    
+    <header class="header-main-page">
+        <div class="bg-header">
+            <nav id="sideNav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <a href="#">About</a>
+                <a href="#">Services</a>
+                <a href="#">Products</a>
+                <a href="#">Contact</a>
+            </nav>
+            <div class="container">
+                <div id="navbar" class="navbar">
+                    <span onclick="openNav()"><i class="fas fa-bars fa-lg"></i></span>
+                    <div class="logo">
+                        <a href="index.html"><h1>
+                            <span>Orinoco</span>
+                            <span class="text-primary">Cameras</span>
+                        </h1></a>
+                    </div>
+                    <div class="cart">
+                        <a href="cart.html"><i onclick="openCart()" class="fas fa-shopping-cart fa-lg"></i></a>
+                        <span id="cartItems" class="cart-items">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-banner container">
+            <div class="banner">
+                <h2 class="heading">Camera Collection</h2>
+                <button class="shop-now-btn" onclick="scrollToMainSection()">Shop Now</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2 class='grid-heading' >Camera Collection</h2>
+            <div class="grid-container">
+                <!-- All product figures added with javascript inside main.js -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">FAQs</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Terms and Conditions</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Cookies</a></li>
+            </ul>
+            <span>Orinoco Inc © 2019 All rights reserved US +1-555-697-8979</span>
+        </div>
+    </footer>
+
+
+</body>
+<script src="/javascript/main.js"></script>
+<script src="/javascript/components.js"></script>
+</html>

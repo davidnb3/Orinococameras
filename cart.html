@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Krub:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/e988a1ca9d.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <div class="bg-header">
+            <nav id="sideNav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <a href="#">About</a>
+                <a href="#">Services</a>
+                <a href="#">Products</a>
+                <a href="#">Contact</a>
+            </nav>
+            <div class="container">
+                <div id="navbar" class="navbar">
+                    <span onclick="openNav()"><i class="fas fa-bars fa-lg"></i></span>
+                    <div class="logo">
+                        <a href="index.html"><h1>
+                            <span>Orinoco</span>
+                            <span class="text-primary">Cameras</span>
+                        </h1></a>
+                    </div>
+                    <div class="cart">
+                        <a href="cart.html"><i onclick="openCart()" class="fas fa-shopping-cart fa-lg"></i></a>
+                        <span id="cartItems" class="cart-items">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="cart container">
+            <h2 id="cartHeader"></h2>
+            <div id="cartContent">
+
+            </div>
+        </div>
+        <div class="button container">
+        </div>
+        <div class="form container">
+            <form action="">
+                <label for="firstName">First Name</label>
+                <input id="firstName" class='form-input' type="text" name="firstName">
+                <label for="lastName">Last Name</label>
+                <input id="lastName" class='form-input' type="text" name="lastName">
+                <label for="address">Address</label>
+                <input id="address" class='form-input' type="text" name="address">
+                <label for="city">City</label>
+                <input id="city" class='form-input' type="text" name="city">
+                <label for="email">Email Address</label>
+                <input id="email" class='form-input' type="email" name="email">
+                <a href="confirmation.html"><input type="submit" class='submit'></a>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">FAQs</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Terms and Conditions</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Cookies</a></li>
+            </ul>
+            <span>Orinoco Inc © 2019 All rights reserved US +1-555-697-8979</span>
+        </div>
+    </footer>
+
+</body>
+<script src="/javascript/components.js"></script>
+<script src="/javascript/cart.js"></script>
+</html>

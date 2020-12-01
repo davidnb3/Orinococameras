@@ -1,0 +1,310 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+body {
+    background-color: #D9D4CE;
+    font-family: 'Krub', sans-serif;
+}
+
+.shop-now-btn, .clear-cart-btn, .add-to-cart-btn, .submit {
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 2px 2px black;
+    outline: none;
+    padding: 10px 15px;
+    background-color: #ebe6e0;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    min-width:150px;
+    &:active {
+        box-shadow: 1px 1px black;
+        position: relative;
+        left: 1px;
+        top: 1px;
+    }
+}
+
+
+/*** Sidenav ***/
+
+header .sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+    background-color: #d8bc9a;
+    padding-top: 60px;
+    text-align: center;
+    a {
+        margin-bottom: 20px;
+        text-decoration: none;
+        font-size: 1.3rem;
+        color: black;
+        display: block;
+        transition: 0.3s;
+        &:hover {
+            color: #f1f1f1;
+            text-decoration: none;
+        }
+    }
+    .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+}
+
+/******/
+
+/*** Navigation ***/
+
+header .bg-header {
+    background-color:#D9D4CE;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    .container .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 100px;
+        transition: 0.5s;
+        .logo a {
+            text-decoration: none;
+            color: inherit;
+            h1 span:first-of-type {
+                color:  #a0522d;
+            }
+        }
+    }
+    .fas {
+        cursor: pointer;
+    }
+    .cart {
+        position: relative;
+        a {
+            color: inherit;
+            padding-bottom: 3px;
+            &:hover {
+                border-bottom: solid 2px #cc7722;
+            }
+        }
+        .cart-items {
+            background-color: #cc7722;
+            color: white;
+            position: absolute;
+            top: -15px;
+            right: -10px;
+            padding: 1px 5px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+        }
+    }
+}
+/******/
+
+/*** Header & Hero ***/
+
+.header-main-page {
+    background: url(/images/vcam_6.jpg);
+    background-size: cover;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-top: 100px;
+    .container-banner {
+        min-height: calc(100vh - 120px);
+        display: flex;
+        align-items: center;
+        padding: 20px;
+    }
+    .banner {
+        max-width: 650px;
+        width: 100%;
+        min-height: 200px;
+        margin: auto;
+        background-color: rgba($color: #D9D4CE, $alpha: 0.6);
+        border-radius: 10px;
+        text-align: center;
+        .heading {
+            font-size: 4rem;
+            margin: 40px 0;;
+        }
+    }
+}
+
+/******/
+
+/*** Grid section ***/
+
+main .grid-heading {
+    text-align: center;
+    margin: 60px 0;
+}
+
+main .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 2fr));
+    grid-gap: 3rem;
+    margin-bottom: 120px;
+    text-align: center;
+    figure {
+        img {
+            max-width: 400px;
+            max-height: 235px;
+            min-height: 235px;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        figcaption {
+            line-height: 2rem;
+            a {
+                text-decoration: none;
+                color: inherit;
+                font-size: 1.2rem;
+                padding: 2px 5px;
+                transition: 0.5s;
+                border-bottom: solid 2px #d8bc9a;
+                &:hover {
+                    color: #f1f1f1;
+                    background-color: #d8bc9a;
+                    border-radius: 5px;
+                }
+            }
+        }
+    }
+}
+/******/
+
+/*** Product page ***/
+
+main .product-container {
+    max-width: 800px;
+    margin: auto;
+    margin-bottom: 120px;
+    margin-top: 100px;
+    img {
+        max-width: 800px;
+        border-radius: 10px;
+    }
+    h2, p {
+        margin: 20px 0;
+    }
+}
+
+/******/
+
+/*** Cart page ***/
+
+main .cart.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    #cartHeader {
+        margin-bottom: 60px;
+    }
+    .cart-item {
+        max-width: 1000px;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        align-items: center;
+        background-color: #ebe6e0;
+        padding: 20px 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        img {
+            max-width: 150px;
+            max-height: 150px;
+        }
+        h3, span {
+            font-size: 0.95rem;
+        }
+        button {
+            margin: auto;
+            padding: 3px 5px;
+            background-color: #da9898;
+            border: none;
+            outline: none;
+        }
+    }
+}
+
+main .button.container {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+main .form.container {
+    margin-bottom: 60px;
+    form {
+        display: flex;
+        flex-direction: column;
+        max-width: 300px;
+        margin: auto;
+        text-align: center;
+        .form-input {
+            margin-bottom: 10px;
+            height: 30px;
+            outline: none;
+            padding: 3px 5px;
+            border-radius: 5px;
+            border: 1px solid black;
+        }
+        .submit {
+            max-width: 150px;
+            margin: auto;
+            margin-top: 20px;
+        }
+    }
+}
+
+
+/******/
+
+/*** Footer ***/
+
+footer {
+    text-align: center;
+    margin-bottom: 20px;
+    ul {
+        margin-bottom: 10px;
+        li {
+            display: inline;
+            margin: 0 5px;
+            padding-bottom: 3px;
+            border-bottom: solid 2px #d8bc9a;
+            transition: 0.5s;
+            a {
+                text-decoration: none;
+                color: inherit;
+            }
+            &:hover {
+                color: #f1f1f1;
+            }
+        }
+    }
+    span {
+        font-size: 0.8rem;
+    }
+}
