@@ -13,6 +13,7 @@ const formContainer = document.querySelector('.form.container');
 function showCartContent() {
     if (localStorage.getItem('addedCameras') != null) {
         cartHeader.textContent = 'Your Cart';
+
         // Show clear-cart-button
         clearCartBtn.classList.add('clear-cart-btn');
         clearCartBtn.textContent = 'Clear cart';
@@ -26,16 +27,18 @@ function showCartContent() {
             let itemLense = document.createElement('span');
             let itemPrice = document.createElement('span');
             let removeBtn = document.createElement('button');
-            
+
+            // Add attributes and and text to cart elements
             itemContainer.classList.add('cart-item');
             itemImg.setAttribute('src', cartItems[i].image);
             itemName.textContent = cartItems[i].name;
             itemLense.textContent = cartItems[i].lense;
             itemPrice.textContent = '$' + cartItems[i].price / 100;
+            // Adding item id to use inside remove-btn eventlistener
             itemContainer.setAttribute('id', cartItems[i].id);
             removeBtn.innerHTML = '<i class="fas fa-times"></i>';
 
-
+            // Append individual itemcontainer to cartcontainer
             itemContainer.appendChild(itemImg);
             itemContainer.appendChild(itemName);
             itemContainer.appendChild(itemLense);
@@ -43,6 +46,7 @@ function showCartContent() {
             itemContainer.appendChild(removeBtn);
             cartContent.appendChild(itemContainer);
 
+            // Call function to remove item from cart
             removeItem(removeBtn, itemContainer);
         };
     } else {
@@ -53,45 +57,52 @@ function showCartContent() {
 showCartContent();
 
 
+// To remove item from the cart by pressing button
 function removeItem(removeBtn, itemContainer) {
     removeBtn.addEventListener('click', (event) => {
         event.preventDefault();
-        // get id of elmt cliked
+        // Get item id 
         let product_id = itemContainer.getAttribute('id');
         itemContainer.remove();
 
+        // Loop through cartItems to just remove itemcontainer with corresponding id
         for (let i = 0; i < cartItems.length; i++) {
             if (cartItems[i].id == product_id) {
                 cartItems.splice(i, 1);
             };
         };
         
+        // update localstorage
         localStorage.setItem('addedCameras', JSON.stringify(cartItems));
 
+        // remove localstorage item when empty
         if (cartItems.length == 0) {
             localStorage.removeItem('addedCameras');
         }
+
+        // reload page to dynamically hide form when cart is empty
         location.reload();
     });
 };
 
-
+// Eventlistener to clear the cart
 clearCartBtn.addEventListener('click', (event) => {
     event.preventDefault();
     cartContent.remove();
     localStorage.removeItem('addedCameras');
     cartHeader.textContent = 'Your Cart is empty';
     clearCartBtn.style.display = 'none';
+    // reload page to dynamically hide form when cart is empty
     location.reload();
 });
 
 
-// only becomes hidden after refreshing page
+// Hide form when cart is empty
 if (JSON.parse(localStorage.getItem('addedCameras')) == null) {
     formContainer.style.display = 'none';
 };
 
-
+// Submit-btn eventlistener to create contact object and item array and send it to server
 submitBtn.addEventListener('click', (event) => {
     event.preventDefault();
     const firstName = document.getElementById('firstName');
@@ -110,12 +121,12 @@ submitBtn.addEventListener('click', (event) => {
 
     let items;
     for (let i in cartItems) {
-        items = cartItems[i].id;
+        items = cartItems[i]._id;
     }
-    
+
+    // Call async function to send data to server
     confirmOrder(contact, items);
 })
-
 
 
 function makeRequest(contact, items) {
@@ -139,9 +150,7 @@ function makeRequest(contact, items) {
 
 async function confirmOrder(contact, items) {   
     try {
-        let promiseRequest = makeRequest(contact, items);
-        let promiseResponse = await promiseRequest;
-        
+        await makeRequest(contact, items);
     } catch (error) {
         clearCartBtn.style.display = 'none';
         cartContent.remove();
