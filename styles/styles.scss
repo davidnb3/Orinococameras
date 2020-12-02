@@ -257,15 +257,34 @@ main .button.container {
 
 main .form.container {
     margin-bottom: 60px;
-    form {
+    form fieldset{
         display: flex;
         flex-direction: column;
-        max-width: 300px;
+        max-width: 790px;
+        padding: 40px 20px;
         margin: auto;
-        text-align: center;
+        border-color: #d8bc9a;
+        legend {
+            font-size: 1.3rem;
+            padding: 0 10px;
+        }
+        label {
+            font-size: 1.2rem;
+        }
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            div {
+                display: flex;
+                flex-direction: column;
+                width: 45%;
+            }
+        }
         .form-input {
             margin-bottom: 10px;
-            height: 30px;
+            height: 35px;
+            font-size: 1.2rem;
             outline: none;
             padding: 3px 5px;
             border-radius: 5px;
@@ -275,6 +294,9 @@ main .form.container {
             max-width: 150px;
             margin: auto;
             margin-top: 20px;
+        }
+        a {
+            margin: auto;
         }
     }
 }

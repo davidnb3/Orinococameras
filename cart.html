@@ -47,17 +47,26 @@
         </div>
         <div class="form container">
             <form action="">
-                <label for="firstName">First Name</label>
-                <input id="firstName" class='form-input' type="text" name="firstName">
-                <label for="lastName">Last Name</label>
-                <input id="lastName" class='form-input' type="text" name="lastName">
-                <label for="address">Address</label>
-                <input id="address" class='form-input' type="text" name="address">
-                <label for="city">City</label>
-                <input id="city" class='form-input' type="text" name="city">
-                <label for="email">Email Address</label>
-                <input id="email" class='form-input' type="email" name="email">
-                <a href="confirmation.html"><input type="submit" class='submit'></a>
+                <fieldset>
+                    <legend>Submit Order</legend>
+                    <div class="form-group">
+                        <div>
+                            <label for="firstName">First Name</label>
+                            <input id="firstName" class='form-input' type="text" name="firstName" required>
+                        </div>
+                        <div>
+                            <label for="lastName">Last Name</label>
+                            <input id="lastName" class='form-input' type="text" name="lastName" required>
+                        </div>
+                    </div>
+                    <label for="address">Address</label>
+                    <input id="address" class='form-input' type="text" name="address" required>
+                    <label for="city">City</label>
+                    <input id="city" class='form-input' type="text" name="city" required>
+                    <label for="email">Email Address</label>
+                    <input id="email" class='form-input' type="email" name="email" required>
+                    <a href="confirmation.html"><input type="submit" class='submit'></a>
+                </fieldset>
             </form>
         </div>
     </main>

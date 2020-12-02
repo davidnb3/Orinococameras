@@ -303,7 +303,7 @@ main .form.container {
   margin-bottom: 60px;
 }
 
-main .form.container form {
+main .form.container form fieldset {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -311,24 +311,63 @@ main .form.container form {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  max-width: 300px;
+  max-width: 790px;
+  padding: 40px 20px;
   margin: auto;
-  text-align: center;
+  border-color: #d8bc9a;
 }
 
-main .form.container form .form-input {
+main .form.container form fieldset legend {
+  font-size: 1.3rem;
+  padding: 0 10px;
+}
+
+main .form.container form fieldset label {
+  font-size: 1.2rem;
+}
+
+main .form.container form fieldset .form-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+main .form.container form fieldset .form-group div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 45%;
+}
+
+main .form.container form fieldset .form-input {
   margin-bottom: 10px;
-  height: 30px;
+  height: 35px;
+  font-size: 1.2rem;
   outline: none;
   padding: 3px 5px;
   border-radius: 5px;
   border: 1px solid black;
 }
 
-main .form.container form .submit {
+main .form.container form fieldset .submit {
   max-width: 150px;
   margin: auto;
   margin-top: 20px;
+}
+
+main .form.container form fieldset a {
+  margin: auto;
 }
 
 /******/
