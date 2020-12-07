@@ -1,20 +1,23 @@
 
 // Declaring variables outside of function scope
 let cartItems = JSON.parse(localStorage.getItem('addedCameras'));
+
 const cartContainer = document.querySelector('.cart.container');
-const cartHeader = document.getElementById('cartHeader');
-const btnContainer = document.querySelector('.button.container');
-const clearCartBtn = document.createElement('button');
-const cartContent = document.getElementById('cartContent');
 const submitBtn = document.querySelector('.submit');
 const formContainer = document.querySelector('.form.container');
+const btnContainer = document.querySelector('.button.container');
+const cartHeader = document.getElementById('cartHeader');
+const cartContent = document.getElementById('cartContent');
+
+const clearCartBtn = document.createElement('button');
+
 
 // Show the cart content
 function showCartContent() {
     if (localStorage.getItem('addedCameras') != null) {
         cartHeader.textContent = 'Your Cart';
-        // Show clear-cart-button
 
+        // Show clear-cart-button
         clearCartBtn.classList.add('clear-cart-btn');
         clearCartBtn.textContent = 'Clear cart';
         btnContainer.appendChild(clearCartBtn);
@@ -27,30 +30,31 @@ function showCartContent() {
             let itemLense = document.createElement('span');
             let itemPrice = document.createElement('span');
             let removeBtn = document.createElement('button');
-
-            // Add attributes and and text to cart elements
+            
+            // Add attributes and text to cart elements
             itemContainer.classList.add('cart-item');
             itemImg.setAttribute('src', cartItems[i].image);
             itemName.textContent = cartItems[i].name;
             itemLense.textContent = cartItems[i].lense;
             itemPrice.textContent = '$' + cartItems[i].price / 100;
-
-            // Adding item id to use inside remove-btn eventlistener
+            
+            // Adding item id to use inside removeItem function
             itemContainer.setAttribute('id', cartItems[i].id);
             removeBtn.innerHTML = '<i class="fas fa-times"></i>';
 
-            // Append individual itemcontainer to cartcontainer
+            // Append individual itemcontainers to cartcontainer
             itemContainer.appendChild(itemImg);
             itemContainer.appendChild(itemName);
             itemContainer.appendChild(itemLense);
             itemContainer.appendChild(itemPrice);
             itemContainer.appendChild(removeBtn);
             cartContent.appendChild(itemContainer);
-
+            
             // Call function to remove item from cart
             removeItem(removeBtn, itemContainer);
         };
     } else {
+        // Set cart header when cart is empty
         cartHeader.textContent = 'Your Cart is empty';
     };
 };
@@ -65,6 +69,8 @@ function removeItem(removeBtn, itemContainer) {
 
         // Get item id 
         let product_id = itemContainer.getAttribute('id');
+        
+        // Do I need this?
         itemContainer.remove();
 
         // Loop through cartItems to just remove itemcontainer with corresponding id
@@ -106,7 +112,7 @@ if (JSON.parse(localStorage.getItem('addedCameras')) == null) {
 };
 
 
-// Form validation
+// FORM VALIDATION
 // Variables for contact object and form validation
 const firstName = document.getElementById('firstName');
 const lastName = document.getElementById('lastName');
@@ -119,7 +125,6 @@ let lastNameValid = false;
 let addressValid = false;
 let cityValid = false;
 let emailValid = false;
-
 
 firstName.addEventListener('blur', () => {
     if (firstName.value == "") {
@@ -172,7 +177,7 @@ email.addEventListener('blur', () => {
 });
 
 
-// Submit-btn eventlistener to create contact object and item array and send it to server
+// Eventlistener to create contact object and item array and send it to server
 submitBtn.addEventListener('click', (event) => {
     event.preventDefault();
 
@@ -184,14 +189,16 @@ submitBtn.addEventListener('click', (event) => {
         email: email.value,
     };
 
-    let items;
+    let products = [];
     for (let i in cartItems) {
-        items = cartItems[i]._id;
+        products.push(cartItems[i].id);
     }
     
     let order = {
-        contact, items
+        contact, products
     }
+
+    console.log(order)
     // Call async function to send data to server
     if ((firstNameValid) && (lastNameValid) && (addressValid) && (cityValid) && (emailValid)) {
         confirmOrder(order);
@@ -222,6 +229,7 @@ async function confirmOrder(order) {
     try {
         let promiseRequest = makeRequest(order);
         let promiseResponse = await promiseRequest;
+        showConfirmation(promiseResponse);
     } catch (error) {
         clearCartBtn.style.display = 'none';
         cartContent.remove();
@@ -230,3 +238,12 @@ async function confirmOrder(order) {
 }
 
 
+function showConfirmation(response) {
+    cartContainer.style.display = 'none';
+    btnContainer.style.display = 'none';
+    formContainer.style.display = 'none';
+
+    let confirmContainer = document.createElement('div');
+    confirmContainer.classList.add('confirmation container');
+    
+}

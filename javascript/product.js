@@ -37,7 +37,6 @@ function createProductInfo(response) {
     const h2 = document.createElement('h2');
     const p1 = document.createElement('p');
     const p2 = document.createElement('p');
-    
 
     // Create form to select lenses and set the value for all options
     formLabel.textContent = 'Choose your lense: ';
@@ -83,7 +82,7 @@ function addToCart(response) {
             'quantity': 1
         }
     
-        // Create the array if localstorage is empty
+        // Create array if localstorage is empty
         if (localStorage.getItem('addedCameras') == null) {
             localStorage.setItem('addedCameras', '[]');
         }
