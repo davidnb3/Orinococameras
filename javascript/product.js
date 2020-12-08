@@ -17,7 +17,7 @@ function makeRequest() {
         request.open('GET', 'http://localhost:3000/api/cameras/' + productId);
         request.onreadystatechange = () => {
             if (request.readyState === 4) {
-                if (request.status === 200) {
+                if (request.status === 200 || request.status === 201) {
                     resolve(JSON.parse(request.response));
                 } else {
                     reject('Server not responding');
