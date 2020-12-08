@@ -43,12 +43,7 @@ function showCartContent() {
             removeBtn.innerHTML = '<i class="fas fa-times"></i>';
 
             // Append individual itemcontainers to cartcontainer
-            itemContainer.appendChild(itemImg);
-            itemContainer.appendChild(itemName);
-            itemContainer.appendChild(itemLense);
-            itemContainer.appendChild(itemPrice);
-            itemContainer.appendChild(removeBtn);
-            cartContent.appendChild(itemContainer);
+            appendItems(itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn);
             
             // Call function to remove item from cart
             removeItem(removeBtn, itemContainer);
@@ -61,6 +56,15 @@ function showCartContent() {
 
 showCartContent();
 
+
+function appendItems(itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn) {
+    itemContainer.appendChild(itemImg);
+    itemContainer.appendChild(itemName);
+    itemContainer.appendChild(itemLense);
+    itemContainer.appendChild(itemPrice);
+    itemContainer.appendChild(removeBtn);
+    cartContent.appendChild(itemContainer);
+}
 
 // To remove item from the cart by pressing button
 function removeItem(removeBtn, itemContainer) {
@@ -212,12 +216,12 @@ function makeRequest(order) {
         request.open('POST', 'http://localhost:3000/api/cameras/' + 'order');
         request.onreadystatechange = () => {
             if (request.readyState === 4) {
-                if (request.status === 200) {
+                if (request.status === 200 || request.status === 201) {
                     resolve(JSON.parse(request.response));
                 } else {
                     reject(JSON.parse(request.response));
                 }
-            };  
+            };
         };
         request.setRequestHeader('Content-Type', 'application/json');
         request.send(JSON.stringify(order));
@@ -228,22 +232,25 @@ function makeRequest(order) {
 async function confirmOrder(order) {   
     try {
         let promiseRequest = makeRequest(order);
+        console.log('1')
         let promiseResponse = await promiseRequest;
-        showConfirmation(promiseResponse);
+        console.log('2')
+        //showConfirmation(promiseResponse);
     } catch (error) {
         clearCartBtn.style.display = 'none';
         cartContent.remove();
         cartHeader.textContent = 'Server error';
+        console.log(error);
     }
 }
 
 
-function showConfirmation(response) {
+/*function showConfirmation(response) {
     cartContainer.style.display = 'none';
     btnContainer.style.display = 'none';
     formContainer.style.display = 'none';
 
     let confirmContainer = document.createElement('div');
     confirmContainer.classList.add('confirmation container');
-    
-}
+
+}*/
