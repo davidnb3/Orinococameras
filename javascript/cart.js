@@ -1,3 +1,6 @@
+// CART CONTENT, BUTTONS, FORM VALIDATION AND CONFIRMATION IS CREATED INSIDE CART.JS
+// FORM ELEMENTS ARE CREATED INSIDE CART.HTML
+
 
 // Declaring variables outside of function scope
 let cartItems = JSON.parse(localStorage.getItem('addedCameras'));
@@ -37,7 +40,7 @@ function showCartContent() {
             removeBtn.innerHTML = '<i class="fas fa-times"></i>';
 
             // Append itemcontainers to cartcontainer
-            appendElements(itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn);
+            appendCartElements(itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn);
             
             // Function to remove item from cart
             removeItem(removeBtn, itemContainer);
@@ -50,11 +53,19 @@ function showCartContent() {
 
 showCartContent();
 
+// Get total price from items in cart
+function getTotalPrice() {
+    let total = 0;
+    for (let i in cartItems) {
+        total += cartItems[i].price / 100;
+    }
+    return '$' + total;
+}
 
 // Show total price
 function showTotalPrice() {
     let priceSum = getTotalPrice();
-    totalPrice.textContent = priceSum;
+    totalPrice.textContent = 'Total: ' + priceSum;
     btnContainer.appendChild(totalPrice);
 }
 
@@ -76,17 +87,8 @@ function createElements() {
     return {itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn};
 }
 
-// Get total price from items in cart
-function getTotalPrice() {
-    let total = 0;
-    for (let i in cartItems) {
-        total += cartItems[i].price / 100;
-    }
-    return '$' + total;
-}
-
 // Append itemcontainers to cartcontainer
-function appendElements(itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn) {
+function appendCartElements(itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn) {
     itemContainer.appendChild(itemImg);
     itemContainer.appendChild(itemName);
     itemContainer.appendChild(itemLense);
@@ -278,6 +280,26 @@ function showConfirmation(response) {
     
     console.log(response);
     let confirmContainer = document.createElement('div');
-    confirmContainer.classList.add('confirmation container');
+    confirmContainer.classList.add('confirmation', 'container');
 
-}
+    let confirmHeader = document.createElement('h2');
+    confirmHeader.textContent = 'Thank you for your order!';
+
+    let confirmMessage = document.createElement('p');
+    confirmMessage.textContent = 'Below is your orderID which is also being sent to your email address.';
+
+    let orderId = document.createElement('span');
+    orderId.textContent = 'orderID: ' + response.orderId;
+
+    appendConfirmElements(confirmContainer, confirmHeader, confirmMessage, orderId);
+};
+
+
+function appendConfirmElements(confirmContainer, confirmHeader, confirmMessage, orderId) {
+    let mainContainer = document.querySelector('main');
+    confirmContainer.appendChild(confirmHeader);
+    confirmContainer.appendChild(confirmMessage);
+    confirmContainer.appendChild(orderId);
+    mainContainer.appendChild(confirmContainer);
+};
+
