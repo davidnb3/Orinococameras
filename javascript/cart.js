@@ -1,7 +1,7 @@
 
 // Declaring variables outside of function scope
 let cartItems = JSON.parse(localStorage.getItem('addedCameras'));
-
+console.log(cartItems);
 const cartContainer = document.querySelector('.cart.container');
 const submitBtn = document.querySelector('.submit');
 const formContainer = document.querySelector('.form.container');
@@ -10,6 +10,7 @@ const cartHeader = document.getElementById('cartHeader');
 const cartContent = document.getElementById('cartContent');
 
 const clearCartBtn = document.createElement('button');
+const totalPrice = document.createElement('p');
 
 
 // Show the cart content
@@ -17,19 +18,12 @@ function showCartContent() {
     if (localStorage.getItem('addedCameras') != null) {
         cartHeader.textContent = 'Your Cart';
 
-        // Show clear-cart-button
-        clearCartBtn.classList.add('clear-cart-btn');
-        clearCartBtn.textContent = 'Clear cart';
-        btnContainer.appendChild(clearCartBtn);
+        showClearCartBtn();
+        showTotalPrice();
 
-        // Show all the products inside the cart
+        // Show added products inside the cart
         for (let i in cartItems) {
-            let itemContainer = document.createElement('div');
-            let itemImg = document.createElement('img');
-            let itemName = document.createElement('h3');
-            let itemLense = document.createElement('span');
-            let itemPrice = document.createElement('span');
-            let removeBtn = document.createElement('button');
+            let {itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn} = createElements();
             
             // Add attributes and text to cart elements
             itemContainer.classList.add('cart-item');
@@ -42,10 +36,10 @@ function showCartContent() {
             itemContainer.setAttribute('id', cartItems[i].id);
             removeBtn.innerHTML = '<i class="fas fa-times"></i>';
 
-            // Append individual itemcontainers to cartcontainer
-            appendItems(itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn);
+            // Append itemcontainers to cartcontainer
+            appendElements(itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn);
             
-            // Call function to remove item from cart
+            // Function to remove item from cart
             removeItem(removeBtn, itemContainer);
         };
     } else {
@@ -57,7 +51,42 @@ function showCartContent() {
 showCartContent();
 
 
-function appendItems(itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn) {
+// Show total price
+function showTotalPrice() {
+    let priceSum = getTotalPrice();
+    totalPrice.textContent = priceSum;
+    btnContainer.appendChild(totalPrice);
+}
+
+// Show clear-cart-btn and total price
+function showClearCartBtn() {
+    clearCartBtn.classList.add('clear-cart-btn');
+    clearCartBtn.textContent = 'Clear cart';
+    btnContainer.appendChild(clearCartBtn);
+}
+
+// Create cart elements
+function createElements() {
+    let itemContainer = document.createElement('div');
+    let itemImg = document.createElement('img');
+    let itemName = document.createElement('h3');
+    let itemLense = document.createElement('span');
+    let itemPrice = document.createElement('span');
+    let removeBtn = document.createElement('button');
+    return {itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn};
+}
+
+// Get total price from items in cart
+function getTotalPrice() {
+    let total = 0;
+    for (let i in cartItems) {
+        total += cartItems[i].price / 100;
+    }
+    return '$' + total;
+}
+
+// Append itemcontainers to cartcontainer
+function appendElements(itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn) {
     itemContainer.appendChild(itemImg);
     itemContainer.appendChild(itemName);
     itemContainer.appendChild(itemLense);
@@ -66,7 +95,7 @@ function appendItems(itemContainer, itemImg, itemName, itemLense, itemPrice, rem
     cartContent.appendChild(itemContainer);
 }
 
-// To remove item from the cart by pressing button
+// To remove item from cart with eventlistener
 function removeItem(removeBtn, itemContainer) {
     removeBtn.addEventListener('click', (event) => {
         event.preventDefault();
@@ -203,7 +232,7 @@ submitBtn.addEventListener('click', (event) => {
     }
 
     console.log(order)
-    // Call async function to send data to server
+    // Call async function to send data to server when validation booleans are true
     if ((firstNameValid) && (lastNameValid) && (addressValid) && (cityValid) && (emailValid)) {
         confirmOrder(order);
     }
@@ -232,25 +261,23 @@ function makeRequest(order) {
 async function confirmOrder(order) {   
     try {
         let promiseRequest = makeRequest(order);
-        console.log('1')
         let promiseResponse = await promiseRequest;
-        console.log('2')
-        //showConfirmation(promiseResponse);
+        showConfirmation(promiseResponse);
     } catch (error) {
         clearCartBtn.style.display = 'none';
         cartContent.remove();
         cartHeader.textContent = 'Server error';
-        console.log(error);
     }
 }
 
 
-/*function showConfirmation(response) {
+function showConfirmation(response) {
     cartContainer.style.display = 'none';
     btnContainer.style.display = 'none';
     formContainer.style.display = 'none';
-
+    
+    console.log(response);
     let confirmContainer = document.createElement('div');
     confirmContainer.classList.add('confirmation container');
 
-}*/
+}
