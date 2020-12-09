@@ -9,6 +9,6 @@ The server was already built by the OCC team, so my mission was to get all the d
 
 I used the localstorage JS functionality to save and add the products to the cart, and redirected the user to a confirmation page using a POST request with validated contact details.
 
-Unfortunately, I only pushed the whole project to this remote repository after having finished around 60% of it.
-
 Part of the project was also a test plan which should cover at least 80% of the front-end code base.
+
+Unfortunately, I only pushed the whole project to this remote repository after having finished around 60% of it, because I didn't found it necessary at the beginning but at some point I thought 'well it could actually become useful in the future...'
