@@ -89,6 +89,9 @@ header .bg-header {
         .logo a {
             text-decoration: none;
             color: inherit;
+            @media only screen and (max-width: 400px) {
+                font-size: 0.85rem;
+            }
             h1 span:first-of-type {
                 color:  #a0522d;
             }
@@ -96,6 +99,9 @@ header .bg-header {
     }
     .fas {
         cursor: pointer;
+        @media only screen and (max-width: 400px) {
+            font-size: 1.1rem;
+        }
     }
     .cart {
         position: relative;
@@ -115,6 +121,10 @@ header .bg-header {
             padding: 1px 5px;
             border-radius: 50px;
             font-size: 0.9rem;
+            @media only screen and (max-width: 400px) {
+                font-size: 0.8rem;
+                top: -10px;
+            }
         }
     }
 }
@@ -144,7 +154,10 @@ header .bg-header {
         text-align: center;
         .heading {
             font-size: 4rem;
-            margin: 40px 0;;
+            margin: 40px 0;
+            @media only screen and (max-width: 400px) {
+                font-size: 3rem;
+            }
         }
     }
 }
@@ -173,6 +186,7 @@ main .grid-container {
             height: 100%;
             border-radius: 10px;
             margin-bottom: 10px;
+            
         }
         figcaption {
             line-height: 2rem;
@@ -203,6 +217,7 @@ main .product-container {
     margin-top: 100px;
     img {
         max-width: 800px;
+        width: 100%;
         border-radius: 10px;
     }
     h2, p {
@@ -224,6 +239,12 @@ main .cart.container {
     #cartHeader {
         margin-bottom: 60px;
     }
+    #cartContent {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
     .cart-item {
         max-width: 1000px;
         display: grid;
@@ -233,6 +254,12 @@ main .cart.container {
         padding: 20px 20px;
         border-radius: 10px;
         margin-bottom: 20px;
+        @media only screen and (max-width: 600px) {
+            grid-template-columns: none;
+            grid-template-rows: repeat(5, 1fr);
+            max-height: 250px;
+            margin: 20px;
+        }
         img {
             max-width: 150px;
             max-height: 150px;
@@ -275,10 +302,16 @@ main .form.container {
             display: flex;
             justify-content: space-between;
             flex-direction: row;
+            @media only screen and (max-width: 600px) {
+                flex-direction: column;
+            }
             div {
                 display: flex;
                 flex-direction: column;
                 width: 45%;
+                @media only screen and (max-width: 600px) {
+                    width: 100%;
+                }
             }
         }
         .form-input {
@@ -306,6 +339,7 @@ main .confirmation.container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     margin-bottom: 20px;
     * {
         margin-bottom: 20px;
@@ -324,6 +358,7 @@ footer {
     margin-bottom: 20px;
     ul {
         margin-bottom: 10px;
+        line-height: 40px;
         li {
             display: inline;
             margin: 0 5px;
