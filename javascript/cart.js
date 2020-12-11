@@ -116,6 +116,12 @@ function removeItem(removeBtn, itemContainer) {
 
         // update localstorage
         localStorage.setItem('addedCameras', JSON.stringify(cartItems));
+        
+        showTotalPrice();
+    
+        if (cartItems.length === 0) {
+            localStorage.removeItem('addedCameras');
+        }
 
         updateCartWhenEmpty();
     });
@@ -124,18 +130,18 @@ function removeItem(removeBtn, itemContainer) {
 // Eventlistener to clear the cart
 clearCartBtn.addEventListener('click', (event) => {
     event.preventDefault();
+    localStorage.removeItem('addedCameras');
     updateCartWhenEmpty();
 });
 
 
 // When cart is empty, hide elements and remove localstorage
 function updateCartWhenEmpty() {
-    if (JSON.parse(localStorage.getItem('addedCameras')) == null || cartItems.length === 0) {
+    if (JSON.parse(localStorage.getItem('addedCameras')) == null) {
         formContainer.style.display = 'none';
         cartHeader.textContent = 'Your Cart is empty';
         btnContainer.style.display = 'none';
         cartContent.style.display = 'none';
-        localStorage.removeItem('addedCameras');
     };
 }
 updateCartWhenEmpty();
