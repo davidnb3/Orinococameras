@@ -105,7 +105,6 @@ function removeItem(removeBtn, itemContainer) {
         // Get item id 
         let product_id = itemContainer.getAttribute('id');
         
-        // Do I need this?
         itemContainer.remove();
 
         // Loop through cartItems to just remove itemcontainer with corresponding id
@@ -118,33 +117,28 @@ function removeItem(removeBtn, itemContainer) {
         // update localstorage
         localStorage.setItem('addedCameras', JSON.stringify(cartItems));
 
-        // remove localstorage item when empty
-        if (cartItems.length == 0) {
-            localStorage.removeItem('addedCameras');
-        };
-
-        // reload page to dynamically hide form when cart is empty
-        location.reload();
+        updateCartWhenEmpty();
     });
 };
 
 // Eventlistener to clear the cart
 clearCartBtn.addEventListener('click', (event) => {
     event.preventDefault();
-    cartContent.remove();
-    localStorage.removeItem('addedCameras');
-    cartHeader.textContent = 'Your Cart is empty';
-    clearCartBtn.style.display = 'none';
-
-    // reload page to dynamically hide form when cart is empty
-    location.reload();
+    updateCartWhenEmpty();
 });
 
 
-// Hide form when cart is empty
-if (JSON.parse(localStorage.getItem('addedCameras')) == null) {
-    formContainer.style.display = 'none';
-};
+// When cart is empty, hide elements and remove localstorage
+function updateCartWhenEmpty() {
+    if (JSON.parse(localStorage.getItem('addedCameras')) == null || cartItems.length === 0) {
+        formContainer.style.display = 'none';
+        cartHeader.textContent = 'Your Cart is empty';
+        btnContainer.style.display = 'none';
+        cartContent.style.display = 'none';
+        localStorage.removeItem('addedCameras');
+    };
+}
+updateCartWhenEmpty();
 
 
 // FORM VALIDATION
@@ -154,14 +148,34 @@ const lastName = document.getElementById('lastName');
 const address = document.getElementById('address');
 const city = document.getElementById('city');
 const email = document.getElementById('email');
+const formInputs = [firstName, lastName, address, city, email];
 // Set validation boolean to false
 let firstNameValid = false;
 let lastNameValid = false;
 let addressValid = false;
 let cityValid = false;
 let emailValid = false;
+const validations = [firstNameValid, lastNameValid, addressValid, cityValid, emailValid];
 
-firstName.addEventListener('blur', () => {
+for (let i in formInputs) {
+    formInputs[i].addEventListener('blur', () => {
+        if (formInputs[i].value == "") {
+            for (let i in validations) {
+                validations[i] = false;
+            }
+            formInputs[i].style.border = 'medium solid #da9898';
+            console.log(validations);
+        } else {
+            formInputs[i].style.border = 'none';
+            for (let i in validations) {
+                validations[i] = true;
+            }
+            console.log(validations);
+        }
+    })
+}
+
+/*firstName.addEventListener('blur', () => {
     if (firstName.value == "") {
         firstNameValid = false;
         firstName.style.border = 'medium solid #da9898';
@@ -209,7 +223,7 @@ email.addEventListener('blur', () => {
         email.style.border = 'none';
         emailValid = true;
     }
-});
+});*/
 
 
 // Eventlistener to create contact object and item array and send it to server
@@ -235,9 +249,14 @@ submitBtn.addEventListener('click', (event) => {
 
     console.log(order)
     // Call async function to send data to server when validation booleans are true
-    if ((firstNameValid) && (lastNameValid) && (addressValid) && (cityValid) && (emailValid)) {
+
+    
+        if (validations) {
+            confirmOrder(order);   
+        }
+    /*if ((firstNameValid) && (lastNameValid) && (addressValid) && (cityValid) && (emailValid)) {
         confirmOrder(order);
-    }
+    }*/
 })
 
 
