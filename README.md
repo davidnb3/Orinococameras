@@ -11,4 +11,4 @@ I used the localstorage JS functionality to save and add the products to the car
 
 Part of the project was also a test plan which should cover at least 80% of the front-end code base.
 
-Unfortunately, I only pushed the whole project to this remote repository after having finished around 60% of it, because I didn't found it necessary at the beginning but at some point I thought 'well it could actually become useful in the future...'
+Unfortunately, I only pushed the whole project to this remote repository after having finished around 60% of it, because I didn't found it necessary at the beginning but at some point I thought different...
