@@ -107,14 +107,14 @@ header .bg-header .container .navbar .logo a {
   color: inherit;
 }
 
-@media only screen and (max-width: 400px) {
-  header .bg-header .container .navbar .logo a {
-    font-size: 0.85rem;
-  }
-}
-
 header .bg-header .container .navbar .logo a h1 span:first-of-type {
   color: #a0522d;
+}
+
+@media only screen and (max-width: 400px) {
+  header .bg-header .container .navbar .logo a h1 span:last-of-type {
+    display: none;
+  }
 }
 
 header .bg-header .fas {
@@ -264,6 +264,13 @@ main .product-container img {
 
 main .product-container h2, main .product-container p {
   margin: 20px 0;
+}
+
+main .product-container form select {
+  border-radius: 5px;
+  border: none;
+  height: 20px;
+  margin-left: 20px;
 }
 
 /******/
