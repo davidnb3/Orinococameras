@@ -166,17 +166,11 @@ const validations = [firstNameValid, lastNameValid, addressValid, cityValid, ema
 for (let i in formInputs) {
     formInputs[i].addEventListener('blur', () => {
         if (formInputs[i].value == "") {
-            for (let i in validations) {
-                validations[i] = false;
-            }
+            validations[i] = false;
             formInputs[i].style.border = 'medium solid #da9898';
-            console.log(validations);
         } else {
             formInputs[i].style.border = 'none';
-            for (let i in validations) {
-                validations[i] = true;
-            }
-            console.log(validations);
+            validations[i] = true;
         }
     })
 }
