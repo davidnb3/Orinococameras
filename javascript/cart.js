@@ -250,13 +250,20 @@ submitBtn.addEventListener('click', (event) => {
     console.log(order)
     // Call async function to send data to server when validation booleans are true
 
-    
-        if (validations) {
-            confirmOrder(order);   
+    for (let i in validations) {
+        if (validations[i]) {
+            // How to run this only one???
+            confirmOrder(order);
+            console.log(validations)
+        } else {
+            const errorMessage = document.createElement('p');
+            errorMessage.textContent = 'Please fill out every field!'
+            errorMessage.style.color = '#da9898';
+            formContainer.appendChild(errorMessage);
+            console.log(errorMessage)
         }
-    /*if ((firstNameValid) && (lastNameValid) && (addressValid) && (cityValid) && (emailValid)) {
-        confirmOrder(order);
-    }*/
+    }    
+    
 })
 
 
