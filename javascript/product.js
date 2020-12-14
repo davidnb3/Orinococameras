@@ -88,11 +88,12 @@ function addToCart(response) {
         }
         
         // Get already existing cameras and add the new camera
-        let existingCameras = JSON.parse(localStorage.getItem('addedCameras'));
-        existingCameras.push(product);
+        let addedCameras = JSON.parse(localStorage.getItem('addedCameras'));
+        addedCameras.push(product);
+        console.log(addedCameras);
     
         // Save existing and added cameras to localstorage
-        localStorage.setItem('addedCameras', JSON.stringify(existingCameras));
+        localStorage.setItem('addedCameras', JSON.stringify(addedCameras));
     });
 };
 
