@@ -39,6 +39,10 @@ body {
   top: 1px;
 }
 
+.clear-cart-btn, .add-to-cart-btn {
+  margin-bottom: 20px;
+}
+
 /*** Sidenav ***/
 header .sidenav {
   height: 100%;
