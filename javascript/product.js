@@ -1,5 +1,6 @@
 
 // Create button and form outside of function scope
+const mainContainer = document.querySelector('main .container .product-container');
 const addToCartBtn = document.createElement('button');
 const form = document.createElement('form');
 const formLabel = document.createElement('label');
@@ -31,7 +32,7 @@ function makeRequest() {
 // Create all the content for the product page
 function createProductInfo(response) {
     // Create new elements to populate the DOM
-    const mainContainer = document.querySelector('main .container .product-container');
+    
     const imgSrc = response.imageUrl;
     const img = document.createElement('img');
     const h2 = document.createElement('h2');
@@ -94,6 +95,11 @@ function addToCart(response) {
     
         // Save existing and added cameras to localstorage
         localStorage.setItem('addedCameras', JSON.stringify(addedCameras));
+
+        const message = document.createElement('p');
+        message.textContent = product.name + ' succesfully added to cart!'
+        message.style.color = '#a0522d';
+        mainContainer.appendChild(message);
     });
 };
 
