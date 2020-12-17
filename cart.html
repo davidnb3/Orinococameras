@@ -47,7 +47,7 @@
         </div>
         <div class="form container">
             <!-- Do I need this action attribute??-->
-            <form action="http://localhost:3000/api/cameras/order">
+            <form>
                 <fieldset>
                     <legend>Submit Order</legend>
                     <div class="form-group">
@@ -65,7 +65,7 @@
                     <label for="city">City</label>
                     <input id="city" class='form-input' type="text" name="city" required>
                     <label for="email">Email Address</label>
-                    <input id="email" class='form-input' type="email" name="email" required>
+                    <input id="email" class='form-input' type="email" name="email" required pattern=".+@.+\..+">
                     <input type="submit" class='submit'>
                 </fieldset>
             </form>
@@ -87,6 +87,6 @@
     </footer>
 
 </body>
-<script src="/javascript/components.js"></script>
+<script src="/javascript/common.js"></script>
 <script src="/javascript/cart.js"></script>
 </html>
