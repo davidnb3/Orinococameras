@@ -31,24 +31,9 @@ function makeRequest() {
 
 // Create all the content for the product page
 function createProductInfo(response) {
-    // Create new elements to populate the DOM
-    
     const imgSrc = response.imageUrl;
-    const img = document.createElement('img');
-    const h2 = document.createElement('h2');
-    const p1 = document.createElement('p');
-    const p2 = document.createElement('p');
-
-    // Create form to select lenses and set the value for all options
-    formLabel.textContent = 'Choose your lense: ';
-    for (let i in response.lenses) {
-        const formOption = document.createElement('option');
-        formOption.textContent = response.lenses[i];
-        formOption.setAttribute('value', response.lenses[i]);
-        formSelect.appendChild(formOption);
-    };
-    form.appendChild(formLabel);
-    form.appendChild(formSelect);
+    const { img, h2, p1, p2 } = createElements();
+    lenseSelect(response);
 
     // Set element attributes and textcontent
     img.setAttribute('src', imgSrc);
@@ -58,17 +43,41 @@ function createProductInfo(response) {
     addToCartBtn.textContent = 'Add to cart';
     addToCartBtn.classList.add('add-to-cart-btn');
 
-    // Add everything to the main container
+    appendElements(img, h2, p1, p2);
+    addToCart(response);
+};
+
+// Create displayed elements
+function createElements() {
+    const img = document.createElement('img');
+    const h2 = document.createElement('h2');
+    const p1 = document.createElement('p');
+    const p2 = document.createElement('p');
+    return { img, h2, p1, p2 };
+}
+
+// Create form to select lenses and set the value for all options
+function lenseSelect(response) {
+    formLabel.textContent = 'Choose your lense: ';
+    for (let i in response.lenses) {
+        const formOption = document.createElement('option');
+        formOption.textContent = response.lenses[i];
+        formOption.setAttribute('value', response.lenses[i]);
+        formSelect.appendChild(formOption);
+    };
+    form.appendChild(formLabel);
+    form.appendChild(formSelect);
+}
+
+// Append DOM elements to main container
+function appendElements(img, h2, p1, p2) {
     mainContainer.appendChild(img);
     mainContainer.appendChild(h2);
     mainContainer.appendChild(p1);
     mainContainer.appendChild(form);
     mainContainer.appendChild(p2);
     mainContainer.appendChild(addToCartBtn);
-
-    // Call function to add product to the localstorage
-    addToCart(response);
-};
+}
 
 // Add the product to localstorage by clicking the add-to-cart-button
 function addToCart(response) {
@@ -83,35 +92,10 @@ function addToCart(response) {
             'quantity': 1
         }
 
+        // Get camera array from LS
         let addedCameras = JSON.parse(localStorage.getItem('addedCameras'));
 
-        // Create array if localstorage is empty
-        if (addedCameras == null) {
-            let addedCameras = [];
-            addedCameras.push(product);
-            localStorage.setItem('addedCameras', JSON.stringify(addedCameras));
-            console.log(addedCameras)
-        }
-    
-
-        for (let i in addedCameras) {
-            // Add 1 quantity if id already present
-            if (addedCameras[i].id === product.id) {
-                addedCameras[i].quantity += 1;
-                localStorage.setItem('addedCameras', JSON.stringify(addedCameras));
-                console.log(addedCameras)
-                // If id not present, add new product to localstorage
-            } else {
-                addedCameras.push(product);
-                localStorage.setItem('addedCameras', JSON.stringify(addedCameras));
-                console.log(addedCameras)
-            }
-        }
-
-        // Function doesn't work when calling it on line 92, 99 & 103 ??
-        /*function updateLocalstorage() {
-            localStorage.setItem('addedCameras', JSON.stringify(addedCameras));
-        }*/
+        updateLocalstorage(addedCameras, product);
 
         const message = document.createElement('p');
         message.textContent = product.name + ' succesfully added to cart!'
@@ -120,6 +104,39 @@ function addToCart(response) {
     });
 };
 
+
+function updateLocalstorage(addedCameras, product) {
+    // Create array if localstorage is empty
+    if (addedCameras == null) {
+        let addedCameras = [];
+        addedCameras.push(product);
+        /* Repeated code.. and function doesn't work */
+        saveToLocalstorage(addedCameras);
+        console.log(addedCameras);
+    }
+
+    let checkId = false;
+    for (let i in addedCameras) {
+        // Check if ID already present, if yes add 1 quantity
+        if (addedCameras[i].id === product.id) {
+            addedCameras[i].quantity += 1;
+            saveToLocalstorage(addedCameras);
+            checkId = true;
+            console.log(addedCameras);
+        }
+    }
+
+    // If ID is not present, add new product to LS
+    if (checkId === false) {
+        addedCameras.push(product);
+        saveToLocalstorage(addedCameras);
+        console.log(addedCameras);
+    }
+}
+
+function saveToLocalstorage(addedCameras) {
+    localStorage.setItem('addedCameras', JSON.stringify(addedCameras));
+}
 
 async function getProductInfo() {
     try {

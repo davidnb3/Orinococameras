@@ -188,59 +188,6 @@ email.addEventListener('blur', () => {
 })
 
 
-
-
-/*firstName.addEventListener('blur', () => {
-    if (firstName.value == "") {
-        firstNameValid = false;
-        firstName.style.border = 'medium solid #da9898';
-    } else {
-        firstName.style.border = 'none';
-        firstNameValid = true;
-    }
-});
-
-lastName.addEventListener('blur', () => {
-    if (lastName.value == "") {
-        lastNameValid = false;
-        lastName.style.border = 'medium solid #da9898';
-    } else {
-        lastName.style.border = 'none';
-        lastNameValid = true;
-    }
-});
-
-address.addEventListener('blur', () => {
-    if (address.value == "") {
-        addressValid = false;
-        address.style.border = 'medium solid #da9898';
-    } else {
-        address.style.border = 'none';
-        addressValid = true;
-    }
-});
-
-city.addEventListener('blur', () => {
-    if (city.value == "") {
-        cityValid = false;
-        city.style.border = 'medium solid #da9898';
-    } else {
-        city.style.border = 'none';
-        cityValid = true;
-    }
-});
-
-email.addEventListener('blur', () => {
-    if (email.value == "") {
-        emailValid = false;
-        email.style.border = 'medium solid #da9898';
-    } else {
-        email.style.border = 'none';
-        emailValid = true;
-    }
-});*/
-
-
 // Eventlistener to create contact object and item array and send it to server
 submitBtn.addEventListener('click', (event) => {
     event.preventDefault();
@@ -262,27 +209,29 @@ submitBtn.addEventListener('click', (event) => {
         contact, products
     }
 
-    console.log(order)
+    checkValidation(order); 
+})
 
-    // Create boolean to call confirmOrder outside of loop
+
+function checkValidation(order) {
     let checkValidation = true;
-
     for (let i in validations) {
+        // Check if all form inputs are validated
         if (validations[i] === false) {
             checkValidation = false;
         }
     }
+    // If all inputs are validated, send order to server
     if (checkValidation === true) {
         confirmOrder(order);
     } else {
         const errorMessage = document.createElement('p');
-        errorMessage.textContent = 'Please fill out every field!'
+        errorMessage.textContent = 'Please fill out every field!';
         errorMessage.style.color = '#da9898';
         formContainer.appendChild(errorMessage);
-        console.log(errorMessage)
-    } 
-})
-
+        console.log(errorMessage);
+    }
+}
 
 function makeRequest(order) {
     return new Promise((resolve, reject) => {
@@ -315,7 +264,7 @@ async function confirmOrder(order) {
     }
 }
 
-
+// Display order confirmation 
 function showConfirmation(response) {
     cartContainer.style.display = 'none';
     btnContainer.style.display = 'none';
