@@ -82,19 +82,36 @@ function addToCart(response) {
             'price': response.price,
             'quantity': 1
         }
-    
-        // Create array if localstorage is empty
-        if (localStorage.getItem('addedCameras') == null) {
-            localStorage.setItem('addedCameras', '[]');
-        }
-        
-        // Get already existing cameras and add the new camera
+
         let addedCameras = JSON.parse(localStorage.getItem('addedCameras'));
-        addedCameras.push(product);
-        console.log(addedCameras);
+
+        // Create array if localstorage is empty
+        if (addedCameras == null) {
+            let addedCameras = [];
+            addedCameras.push(product);
+            localStorage.setItem('addedCameras', JSON.stringify(addedCameras));
+            console.log(addedCameras)
+        }
     
-        // Save existing and added cameras to localstorage
-        localStorage.setItem('addedCameras', JSON.stringify(addedCameras));
+
+        for (let i in addedCameras) {
+            // Add 1 quantity if id already present
+            if (addedCameras[i].id === product.id) {
+                addedCameras[i].quantity += 1;
+                localStorage.setItem('addedCameras', JSON.stringify(addedCameras));
+                console.log(addedCameras)
+                // If id not present, add new product to localstorage
+            } else {
+                addedCameras.push(product);
+                localStorage.setItem('addedCameras', JSON.stringify(addedCameras));
+                console.log(addedCameras)
+            }
+        }
+
+        // Function doesn't work when calling it on line 92, 99 & 103 ??
+        /*function updateLocalstorage() {
+            localStorage.setItem('addedCameras', JSON.stringify(addedCameras));
+        }*/
 
         const message = document.createElement('p');
         message.textContent = product.name + ' succesfully added to cart!'

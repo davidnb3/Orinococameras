@@ -4,7 +4,6 @@
 
 // Declaring variables outside of function scope
 let cartItems = JSON.parse(localStorage.getItem('addedCameras'));
-console.log(cartItems);
 const cartContainer = document.querySelector('.cart.container');
 const submitBtn = document.querySelector('.submit');
 const formContainer = document.querySelector('.form.container');
@@ -57,6 +56,7 @@ showCartContent();
 function getTotalPrice() {
     let total = 0;
     for (let i in cartItems) {
+        // if price = 0...
         total += cartItems[i].price / 100;
     }
     return '$' + total;
@@ -154,14 +154,15 @@ const lastName = document.getElementById('lastName');
 const address = document.getElementById('address');
 const city = document.getElementById('city');
 const email = document.getElementById('email');
-const formInputs = [firstName, lastName, address, city, email];
+const formInputs = [firstName, lastName, address, city];
 // Set validation boolean to false
 let firstNameValid = false;
 let lastNameValid = false;
 let addressValid = false;
 let cityValid = false;
 let emailValid = false;
-const validations = [firstNameValid, lastNameValid, addressValid, cityValid, emailValid];
+const emailRegex = /.+@.+\..+/;
+const validations = [firstNameValid, lastNameValid, addressValid, cityValid];
 
 for (let i in formInputs) {
     formInputs[i].addEventListener('blur', () => {
@@ -174,6 +175,20 @@ for (let i in formInputs) {
         }
     })
 }
+
+// Separate eventlistener for email field with regular expression
+email.addEventListener('blur', () => {
+    if (email.value == "" || !emailRegex.test(email.value)) {
+        emailValid = false;
+        email.style.border = 'medium solid #da9898';
+    } else {
+        emailValid = true;
+        email.style.border = 'none';
+    }
+})
+
+
+
 
 /*firstName.addEventListener('blur', () => {
     if (firstName.value == "") {
@@ -248,22 +263,24 @@ submitBtn.addEventListener('click', (event) => {
     }
 
     console.log(order)
-    // Call async function to send data to server when validation booleans are true
+
+    // Create boolean to call confirmOrder outside of loop
+    let checkValidation = true;
 
     for (let i in validations) {
-        if (validations[i]) {
-            // How to run this only one???
-            confirmOrder(order);
-            console.log(validations)
-        } else {
-            const errorMessage = document.createElement('p');
-            errorMessage.textContent = 'Please fill out every field!'
-            errorMessage.style.color = '#da9898';
-            formContainer.appendChild(errorMessage);
-            console.log(errorMessage)
+        if (validations[i] === false) {
+            checkValidation = false;
         }
-    }    
-    
+    }
+    if (checkValidation === true) {
+        confirmOrder(order);
+    } else {
+        const errorMessage = document.createElement('p');
+        errorMessage.textContent = 'Please fill out every field!'
+        errorMessage.style.color = '#da9898';
+        formContainer.appendChild(errorMessage);
+        console.log(errorMessage)
+    } 
 })
 
 
