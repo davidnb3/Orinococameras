@@ -144,24 +144,6 @@ header .bg-header .cart a:hover {
   border-bottom: solid 2px #cc7722;
 }
 
-header .bg-header .cart .cart-items {
-  background-color: #cc7722;
-  color: white;
-  position: absolute;
-  top: -15px;
-  right: -10px;
-  padding: 1px 5px;
-  border-radius: 50px;
-  font-size: 0.9rem;
-}
-
-@media only screen and (max-width: 400px) {
-  header .bg-header .cart .cart-items {
-    font-size: 0.8rem;
-    top: -10px;
-  }
-}
-
 /******/
 /*** Header & Hero ***/
 .header-main-page {
@@ -314,6 +296,19 @@ main .cart.container #cartContent {
           justify-content: center;
 }
 
+main .cart.container .wrap-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 main .cart.container .cart-item {
   max-width: 1000px;
   display: -ms-grid;
@@ -326,7 +321,7 @@ main .cart.container .cart-item {
   background-color: #ebe6e0;
   padding: 20px 20px;
   border-radius: 10px;
-  margin-bottom: 20px;
+  margin: 10px 20px 10px 0px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -364,6 +359,11 @@ main .button.container {
 
 main .form.container {
   margin-bottom: 60px;
+}
+
+main .form.container p {
+  margin-top: 10px;
+  text-align: center;
 }
 
 main .form.container form fieldset {
