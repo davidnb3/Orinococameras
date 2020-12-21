@@ -13,9 +13,13 @@ const cartContent = document.getElementById('cartContent');
 
 const clearCartBtn = document.createElement('button');
 const totalPrice = document.createElement('p');
+let qtyContainer = document.createElement('div');
+let increaseBtn = document.createElement('i');
+let quantity = document.createElement('p');
+let decreaseBtn = document.createElement('i');
 
 
-// Show the cart content
+// SHOW CART CONTENT
 function showCartContent() {
     if (localStorage.getItem('addedCameras') != null) {
         cartHeader.textContent = 'Your Cart';
@@ -25,7 +29,7 @@ function showCartContent() {
 
         // Show added products inside the cart
         for (let i in cartItems) {
-            let {itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn} = createElements();
+            let {itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn, wrapContainer} = createElements();
             
             // Add attributes and text to cart elements
             itemContainer.classList.add('cart-item');
@@ -33,13 +37,19 @@ function showCartContent() {
             itemName.textContent = cartItems[i].name;
             itemLense.textContent = cartItems[i].lense;
             itemPrice.textContent = '$' + cartItems[i].price / 100;
+            wrapContainer.classList.add('wrap-container');
             
             // Adding item id to use inside removeItem function
             itemContainer.setAttribute('id', cartItems[i].id);
             removeBtn.innerHTML = '<i class="fas fa-times"></i>';
 
+            // Show quantity with increase/decrease buttons
+            showQuantity(i, wrapContainer);
+
+            updateQuantity(i, itemContainer);
+
             // Append itemcontainers to cartcontainer
-            appendCartElements(itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn);
+            appendCartElements(itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn, wrapContainer);
             
             // Function to remove item from cart
             removeItem(removeBtn, itemContainer);
@@ -52,12 +62,52 @@ function showCartContent() {
 
 showCartContent();
 
+// Create cart elements
+function createElements() {
+    let itemContainer = document.createElement('div');
+    let itemImg = document.createElement('img');
+    let itemName = document.createElement('h3');
+    let itemLense = document.createElement('span');
+    let itemPrice = document.createElement('span');
+    let removeBtn = document.createElement('button');
+    let wrapContainer = document.createElement('div');
+    return {itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn, wrapContainer};
+}
+
+function showQuantity(i, wrapContainer) {
+    qtyContainer.classList.add('quantity-container');
+    increaseBtn.classList.add('fas', 'fa-chevron-up');
+    decreaseBtn.classList.add('fas', 'fa-chevron-down');
+    quantity.textContent = cartItems[i].quantity;
+
+    qtyContainer.appendChild(increaseBtn);
+    qtyContainer.appendChild(quantity);
+    qtyContainer.appendChild(decreaseBtn);
+    wrapContainer.appendChild(qtyContainer);
+}
+
+function updateQuantity(i) {
+    increaseBtn.addEventListener('click', () => {
+        cartItems[i].quantity++;
+        localStorage.setItem('addedCameras', JSON.stringify(cartItems));
+        quantity.textContent = cartItems[i].quantity;
+        showTotalPrice();
+    });
+
+    decreaseBtn.addEventListener('click', () => {
+        cartItems[i].quantity--;
+        localStorage.setItem('addedCameras', JSON.stringify(cartItems));
+        quantity.textContent = cartItems[i].quantity;
+        showTotalPrice();
+    });
+}
+
 // Get total price from items in cart
 function getTotalPrice() {
     let total = 0;
     for (let i in cartItems) {
         // if price = 0...
-        total += cartItems[i].price / 100;
+        total += cartItems[i].quantity * cartItems[i].price / 100;
     }
     return '$' + total;
 }
@@ -76,25 +126,15 @@ function showClearCartBtn() {
     btnContainer.appendChild(clearCartBtn);
 }
 
-// Create cart elements
-function createElements() {
-    let itemContainer = document.createElement('div');
-    let itemImg = document.createElement('img');
-    let itemName = document.createElement('h3');
-    let itemLense = document.createElement('span');
-    let itemPrice = document.createElement('span');
-    let removeBtn = document.createElement('button');
-    return {itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn};
-}
-
 // Append itemcontainers to cartcontainer
-function appendCartElements(itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn) {
+function appendCartElements(itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn, wrapContainer) {
     itemContainer.appendChild(itemImg);
     itemContainer.appendChild(itemName);
     itemContainer.appendChild(itemLense);
     itemContainer.appendChild(itemPrice);
     itemContainer.appendChild(removeBtn);
-    cartContent.appendChild(itemContainer);
+    wrapContainer.appendChild(itemContainer);
+    cartContent.appendChild(wrapContainer);
 }
 
 // To remove item from cart with eventlistener
@@ -147,6 +187,8 @@ function updateCartWhenEmpty() {
 updateCartWhenEmpty();
 
 
+
+
 // FORM VALIDATION
 // Variables for contact object and form validation
 const firstName = document.getElementById('firstName');
@@ -192,6 +234,17 @@ email.addEventListener('blur', () => {
 submitBtn.addEventListener('click', (event) => {
     event.preventDefault();
 
+    
+    for (let i in formInputs) {
+        if (formInputs[i].value == "") {
+            formInputs[i].style.border = 'medium solid #da9898';
+        }
+    }
+
+    if (email.value == "") {
+        email.style.border = 'medium solid #da9898';
+    }
+
     let contact = {
         firstName: firstName.value,
         lastName: lastName.value,
@@ -229,9 +282,9 @@ function checkValidation(order) {
         errorMessage.textContent = 'Please fill out every field!';
         errorMessage.style.color = '#da9898';
         formContainer.appendChild(errorMessage);
-        console.log(errorMessage);
     }
 }
+
 
 function makeRequest(order) {
     return new Promise((resolve, reject) => {
