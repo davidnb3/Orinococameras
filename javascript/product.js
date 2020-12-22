@@ -127,7 +127,7 @@ function updateLocalstorage(addedCameras, product) {
     }
 
     // If ID is not present, add new product to LS
-    if (checkId === false) {
+    if (addedCameras != null && checkId === false) {
         addedCameras.push(product);
         saveToLocalstorage(addedCameras);
         console.log(addedCameras);

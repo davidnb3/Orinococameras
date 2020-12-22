@@ -20,38 +20,34 @@ let decreaseBtn = document.createElement('i');
 
 
 // SHOW CART CONTENT
+// Main function
 function showCartContent() {
     if (localStorage.getItem('addedCameras') != null) {
         cartHeader.textContent = 'Your Cart';
 
+        // Display clear-cart button
         showClearCartBtn();
+        // Display total price
         showTotalPrice();
 
-        // Show added products inside the cart
+        // Loop over added items to show them inside cart
         for (let i in cartItems) {
-            let {itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn, wrapContainer} = createElements();
+            // Create all necessary elements
+            let {itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn,
+                qtyContainer, increase, quantity, decrease} = createElements();
             
             // Add attributes and text to cart elements
-            itemContainer.classList.add('cart-item');
-            itemImg.setAttribute('src', cartItems[i].image);
-            itemName.textContent = cartItems[i].name;
-            itemLense.textContent = cartItems[i].lense;
-            itemPrice.textContent = '$' + cartItems[i].price / 100;
-            wrapContainer.classList.add('wrap-container');
-            
-            // Adding item id to use inside removeItem function
-            itemContainer.setAttribute('id', cartItems[i].id);
-            removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+            setAttributesAndText(itemContainer, itemImg, i, itemName, itemLense, itemPrice, removeBtn);
 
-            // Show quantity with increase/decrease buttons
-            showQuantity(i, wrapContainer);
-
-            updateQuantity(i, itemContainer);
+            // Show and update quantity with increase/decrease button
+            showQuantity(qtyContainer, increase, decrease, quantity, i);
+            updateQuantity(increase, decrease, quantity, i, itemContainer);
 
             // Append itemcontainers to cartcontainer
-            appendCartElements(itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn, wrapContainer);
+            appendCartElements(itemContainer, itemImg, itemName, itemLense,
+                 itemPrice, removeBtn, qtyContainer);
             
-            // Function to remove item from cart
+            // To remove item from cart
             removeItem(removeBtn, itemContainer);
         };
     } else {
@@ -62,7 +58,7 @@ function showCartContent() {
 
 showCartContent();
 
-// Create cart elements
+// Create all necessary elements
 function createElements() {
     let itemContainer = document.createElement('div');
     let itemImg = document.createElement('img');
@@ -70,35 +66,57 @@ function createElements() {
     let itemLense = document.createElement('span');
     let itemPrice = document.createElement('span');
     let removeBtn = document.createElement('button');
-    let wrapContainer = document.createElement('div');
-    return {itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn, wrapContainer};
+    let qtyContainer = document.createElement('div');
+    let increase = document.createElement('i');
+    let quantity = document.createElement('p');
+    let decrease = document.createElement('i');
+    return {itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn,
+        qtyContainer, increase, quantity, decrease};
 }
 
-function showQuantity(i, wrapContainer) {
-    qtyContainer.classList.add('quantity-container');
-    increaseBtn.classList.add('fas', 'fa-chevron-up');
-    decreaseBtn.classList.add('fas', 'fa-chevron-down');
+// Add attributes and text to cart elements
+function setAttributesAndText(itemContainer, itemImg, i, itemName, itemLense, itemPrice, removeBtn) {
+    itemContainer.classList.add('cart-item');
+    itemImg.setAttribute('src', cartItems[i].image);
+    itemName.textContent = cartItems[i].name;
+    itemLense.textContent = cartItems[i].lense;
+    itemPrice.textContent = '$' + cartItems[i].quantity * cartItems[i].price / 100;
+
+    // Adding item id to use inside removeItem function
+    itemContainer.setAttribute('id', cartItems[i].id);
+    removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+}
+
+// Show quantity with increase/decrease button
+function showQuantity(qtyContainer, increase, decrease, quantity, i) {
+    qtyContainer.classList.add('qty-container');
+    increase.classList.add('fas', 'fa-chevron-up');
+    decrease.classList.add('fas', 'fa-chevron-down');
     quantity.textContent = cartItems[i].quantity;
 
-    qtyContainer.appendChild(increaseBtn);
+    qtyContainer.appendChild(increase);
     qtyContainer.appendChild(quantity);
-    qtyContainer.appendChild(decreaseBtn);
-    wrapContainer.appendChild(qtyContainer);
+    qtyContainer.appendChild(decrease);
 }
 
-function updateQuantity(i) {
-    increaseBtn.addEventListener('click', () => {
+// Update quantity with increase/decrease button
+function updateQuantity(increase, decrease, quantity, i, itemContainer) {
+    increase.addEventListener('click', () => {
         cartItems[i].quantity++;
         localStorage.setItem('addedCameras', JSON.stringify(cartItems));
         quantity.textContent = cartItems[i].quantity;
         showTotalPrice();
     });
 
-    decreaseBtn.addEventListener('click', () => {
+    decrease.addEventListener('click', () => {
         cartItems[i].quantity--;
         localStorage.setItem('addedCameras', JSON.stringify(cartItems));
         quantity.textContent = cartItems[i].quantity;
         showTotalPrice();
+
+        if (cartItems[i].quantity === 0) {
+            itemContainer.remove();
+        }
     });
 }
 
@@ -112,14 +130,14 @@ function getTotalPrice() {
     return '$' + total;
 }
 
-// Show total price
+// Display total price
 function showTotalPrice() {
     let priceSum = getTotalPrice();
     totalPrice.textContent = 'Total: ' + priceSum;
     btnContainer.appendChild(totalPrice);
 }
 
-// Show clear-cart-btn and total price
+// Display clear-cart button
 function showClearCartBtn() {
     clearCartBtn.classList.add('clear-cart-btn');
     clearCartBtn.textContent = 'Clear cart';
@@ -127,17 +145,17 @@ function showClearCartBtn() {
 }
 
 // Append itemcontainers to cartcontainer
-function appendCartElements(itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn, wrapContainer) {
+function appendCartElements(itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn, qtyContainer) {
     itemContainer.appendChild(itemImg);
     itemContainer.appendChild(itemName);
     itemContainer.appendChild(itemLense);
     itemContainer.appendChild(itemPrice);
     itemContainer.appendChild(removeBtn);
-    wrapContainer.appendChild(itemContainer);
-    cartContent.appendChild(wrapContainer);
+    itemContainer.appendChild(qtyContainer);
+    cartContent.appendChild(itemContainer);
 }
 
-// To remove item from cart with eventlistener
+// To remove item from cart
 function removeItem(removeBtn, itemContainer) {
     removeBtn.addEventListener('click', (event) => {
         event.preventDefault();
@@ -234,7 +252,6 @@ email.addEventListener('blur', () => {
 submitBtn.addEventListener('click', (event) => {
     event.preventDefault();
 
-    
     for (let i in formInputs) {
         if (formInputs[i].value == "") {
             formInputs[i].style.border = 'medium solid #da9898';
@@ -270,7 +287,7 @@ function checkValidation(order) {
     let checkValidation = true;
     for (let i in validations) {
         // Check if all form inputs are validated
-        if (validations[i] === false) {
+        if (validations[i] === false || emailValid === false) {
             checkValidation = false;
         }
     }
