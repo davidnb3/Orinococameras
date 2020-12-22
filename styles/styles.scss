@@ -243,24 +243,19 @@ main .cart.container {
         flex-wrap: wrap;
         justify-content: center;
     }
-    .wrap-container {
-        display: flex;
-        flex-direction: row-reverse;
-        align-items: center;
-    }
     .cart-item {
-        max-width: 1000px;
+        max-width: 790px;
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 0.5fr;
         align-items: center;
         background-color: #ebe6e0;
         padding: 20px 20px;
         border-radius: 10px;
-        margin: 10px 20px 10px 0px;
+        margin: 10px 0;
         @media only screen and (max-width: 600px) {
             grid-template-columns: none;
-            grid-template-rows: repeat(5, 1fr);
-            max-height: 250px;
+            grid-template-rows: 1fr 1fr 1fr 1fr 1fr 0.5fr;
+            max-height: 350px;
             margin: 20px;
         }
         img {
