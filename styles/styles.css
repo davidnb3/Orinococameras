@@ -147,7 +147,7 @@ header .bg-header .cart a:hover {
 /******/
 /*** Header & Hero ***/
 .header-main-page {
-  background: url(/images/vcam_6.jpg);
+  background: url(../images/vcam_6.jpg);
   background-size: cover;
   min-height: 100vh;
   overflow-x: hidden;
@@ -331,12 +331,18 @@ main .cart.container .cart-item h3, main .cart.container .cart-item span {
   font-size: 0.95rem;
 }
 
-main .cart.container .cart-item button {
+main .cart.container .cart-item .remove-btn {
   margin: auto;
   padding: 3px 5px;
   background-color: #da9898;
   border: none;
   outline: none;
+}
+
+main .cart.container .cart-item .increase, main .cart.container .cart-item .decrease {
+  background-color: #ebe6e0;
+  outline: none;
+  border: none;
 }
 
 main .button.container {

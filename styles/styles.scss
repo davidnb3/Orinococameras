@@ -125,7 +125,7 @@ header .bg-header {
 /*** Header & Hero ***/
 
 .header-main-page {
-    background: url(/images/vcam_6.jpg);
+    background: url(../images/vcam_6.jpg);
     background-size: cover;
     min-height: 100vh;
     overflow-x: hidden;
@@ -265,12 +265,17 @@ main .cart.container {
         h3, span {
             font-size: 0.95rem;
         }
-        button {
+        .remove-btn {
             margin: auto;
             padding: 3px 5px;
             background-color: #da9898;
             border: none;
             outline: none;
+        }
+        .increase, .decrease {
+            background-color: #ebe6e0;
+            outline: none;
+            border: none;
         }
     }
 }
