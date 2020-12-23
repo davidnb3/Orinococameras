@@ -1,7 +1,6 @@
 // CART CONTENT, BUTTONS, FORM VALIDATION AND CONFIRMATION IS CREATED INSIDE CART.JS
 // FORM ELEMENTS ARE CREATED INSIDE CART.HTML
 
-
 // Declaring variables outside of function scope
 let cartItems = JSON.parse(localStorage.getItem('addedCameras'));
 const cartContainer = document.querySelector('.cart.container');
@@ -11,17 +10,23 @@ const btnContainer = document.querySelector('.button.container');
 const cartHeader = document.getElementById('cartHeader');
 const cartContent = document.getElementById('cartContent');
 
+const itemContainer = document.createElement('div');
+const itemImg = document.createElement('img');
+const itemName = document.createElement('h3');
+const itemLense = document.createElement('span');
+const itemPrice = document.createElement('span');
+const removeBtn = document.createElement('button');
+const qtyContainer = document.createElement('div');
+const increase = document.createElement('button');
+const quantity = document.createElement('p');
+const decrease = document.createElement('button');
 const clearCartBtn = document.createElement('button');
 const totalPrice = document.createElement('p');
-let qtyContainer = document.createElement('div');
-let increaseBtn = document.createElement('i');
-let quantity = document.createElement('p');
-let decreaseBtn = document.createElement('i');
 
 
 // SHOW CART CONTENT
 // Main function
-function showCartContent() {
+window.onload = function showCartContent() {
     if (localStorage.getItem('addedCameras') != null) {
         cartHeader.textContent = 'Your Cart';
 
@@ -32,23 +37,15 @@ function showCartContent() {
 
         // Loop over added items to show them inside cart
         for (let i in cartItems) {
-            // Create all necessary elements
-            let {itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn,
-                qtyContainer, increase, quantity, decrease} = createElements();
-            
             // Add attributes and text to cart elements
-            setAttributesAndText(itemContainer, itemImg, i, itemName, itemLense, itemPrice, removeBtn);
-
+            setAttributesAndText(i);
             // Show and update quantity with increase/decrease button
-            showQuantity(qtyContainer, increase, decrease, quantity, i);
-            updateQuantity(increase, decrease, quantity, i, itemContainer);
-
+            showQuantity(i);
+            updateQuantity(i);
             // Append itemcontainers to cartcontainer
-            appendCartElements(itemContainer, itemImg, itemName, itemLense,
-                 itemPrice, removeBtn, qtyContainer);
-            
+            appendCartElements();
             // To remove item from cart
-            removeItem(removeBtn, itemContainer);
+            removeItem();
         };
     } else {
         // Set cart header when cart is empty
@@ -56,42 +53,25 @@ function showCartContent() {
     };
 };
 
-showCartContent();
-
-// Create all necessary elements
-function createElements() {
-    let itemContainer = document.createElement('div');
-    let itemImg = document.createElement('img');
-    let itemName = document.createElement('h3');
-    let itemLense = document.createElement('span');
-    let itemPrice = document.createElement('span');
-    let removeBtn = document.createElement('button');
-    let qtyContainer = document.createElement('div');
-    let increase = document.createElement('i');
-    let quantity = document.createElement('p');
-    let decrease = document.createElement('i');
-    return {itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn,
-        qtyContainer, increase, quantity, decrease};
-}
 
 // Add attributes and text to cart elements
-function setAttributesAndText(itemContainer, itemImg, i, itemName, itemLense, itemPrice, removeBtn) {
+function setAttributesAndText(i) {
     itemContainer.classList.add('cart-item');
     itemImg.setAttribute('src', cartItems[i].image);
     itemName.textContent = cartItems[i].name;
     itemLense.textContent = cartItems[i].lense;
     itemPrice.textContent = '$' + cartItems[i].quantity * cartItems[i].price / 100;
-
+    removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+    removeBtn.classList.add('remove-btn');
     // Adding item id to use inside removeItem function
     itemContainer.setAttribute('id', cartItems[i].id);
-    removeBtn.innerHTML = '<i class="fas fa-times"></i>';
 }
 
 // Show quantity with increase/decrease button
-function showQuantity(qtyContainer, increase, decrease, quantity, i) {
+function showQuantity(i) {
     qtyContainer.classList.add('qty-container');
-    increase.classList.add('fas', 'fa-chevron-up');
-    decrease.classList.add('fas', 'fa-chevron-down');
+    increase.classList.add('fas', 'fa-chevron-up', 'increase');
+    decrease.classList.add('fas', 'fa-chevron-down', 'decrease');
     quantity.textContent = cartItems[i].quantity;
 
     qtyContainer.appendChild(increase);
@@ -100,25 +80,44 @@ function showQuantity(qtyContainer, increase, decrease, quantity, i) {
 }
 
 // Update quantity with increase/decrease button
-function updateQuantity(increase, decrease, quantity, i, itemContainer) {
+function updateQuantity(i) {
     increase.addEventListener('click', () => {
         cartItems[i].quantity++;
         localStorage.setItem('addedCameras', JSON.stringify(cartItems));
         quantity.textContent = cartItems[i].quantity;
+        itemPrice.textContent = '$' + cartItems[i].quantity * cartItems[i].price / 100;
         showTotalPrice();
+
+        if (cartItems[i].quantity > 1) {
+            decrease.removeAttribute('disabled');
+        }
     });
 
     decrease.addEventListener('click', () => {
         cartItems[i].quantity--;
         localStorage.setItem('addedCameras', JSON.stringify(cartItems));
         quantity.textContent = cartItems[i].quantity;
+        itemPrice.textContent = '$' + cartItems[i].quantity * cartItems[i].price / 100;
         showTotalPrice();
-
-        if (cartItems[i].quantity === 0) {
-            itemContainer.remove();
+        
+        if (cartItems[i].quantity === 1) {
+            decrease.disabled = true;
         }
     });
 }
+
+
+// Append itemcontainers to cartcontainer
+function appendCartElements() {
+    itemContainer.appendChild(itemImg);
+    itemContainer.appendChild(itemName);
+    itemContainer.appendChild(itemLense);
+    itemContainer.appendChild(itemPrice);
+    itemContainer.appendChild(removeBtn);
+    itemContainer.appendChild(qtyContainer);
+    cartContent.appendChild(itemContainer);
+}
+
 
 // Get total price from items in cart
 function getTotalPrice() {
@@ -144,19 +143,9 @@ function showClearCartBtn() {
     btnContainer.appendChild(clearCartBtn);
 }
 
-// Append itemcontainers to cartcontainer
-function appendCartElements(itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn, qtyContainer) {
-    itemContainer.appendChild(itemImg);
-    itemContainer.appendChild(itemName);
-    itemContainer.appendChild(itemLense);
-    itemContainer.appendChild(itemPrice);
-    itemContainer.appendChild(removeBtn);
-    itemContainer.appendChild(qtyContainer);
-    cartContent.appendChild(itemContainer);
-}
 
 // To remove item from cart
-function removeItem(removeBtn, itemContainer) {
+function removeItem() {
     removeBtn.addEventListener('click', (event) => {
         event.preventDefault();
 
@@ -279,7 +268,7 @@ submitBtn.addEventListener('click', (event) => {
         contact, products
     }
 
-    checkValidation(order); 
+    checkValidation(order);
 })
 
 
@@ -295,6 +284,7 @@ function checkValidation(order) {
     if (checkValidation === true) {
         confirmOrder(order);
     } else {
+        // Replace content
         const errorMessage = document.createElement('p');
         errorMessage.textContent = 'Please fill out every field!';
         errorMessage.style.color = '#da9898';
@@ -336,6 +326,7 @@ async function confirmOrder(order) {
 
 // Display order confirmation 
 function showConfirmation(response) {
+    // Remove from localstorage
     cartContainer.style.display = 'none';
     btnContainer.style.display = 'none';
     formContainer.style.display = 'none';
