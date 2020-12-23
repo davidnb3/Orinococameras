@@ -112,7 +112,6 @@ function updateLocalstorage(addedCameras, product) {
         addedCameras.push(product);
         /* Repeated code.. and function doesn't work */
         saveToLocalstorage(addedCameras);
-        console.log(addedCameras);
     }
 
     let checkId = false;
@@ -122,7 +121,7 @@ function updateLocalstorage(addedCameras, product) {
             addedCameras[i].quantity += 1;
             saveToLocalstorage(addedCameras);
             checkId = true;
-            console.log(addedCameras);
+
         }
     }
 
@@ -130,7 +129,6 @@ function updateLocalstorage(addedCameras, product) {
     if (addedCameras != null && checkId === false) {
         addedCameras.push(product);
         saveToLocalstorage(addedCameras);
-        console.log(addedCameras);
     }
 }
 
