@@ -20,13 +20,15 @@ const qtyContainer = document.createElement('div');
 const increase = document.createElement('button');
 const quantity = document.createElement('p');
 const decrease = document.createElement('button');
+
+
 const clearCartBtn = document.createElement('button');
 const totalPrice = document.createElement('p');
 
 
 // SHOW CART CONTENT
 // Main function
-window.onload = function showCartContent() {
+function showCartContent() {
     if (localStorage.getItem('addedCameras') != null) {
         cartHeader.textContent = 'Your Cart';
 
@@ -37,11 +39,12 @@ window.onload = function showCartContent() {
 
         // Loop over added items to show them inside cart
         for (let i in cartItems) {
+
             // Add attributes and text to cart elements
             setAttributesAndText(i);
             // Show and update quantity with increase/decrease button
             showQuantity(i);
-            updateQuantity(i);
+    
             // Append itemcontainers to cartcontainer
             appendCartElements();
             // To remove item from cart
@@ -53,6 +56,7 @@ window.onload = function showCartContent() {
     };
 };
 
+showCartContent();
 
 // Add attributes and text to cart elements
 function setAttributesAndText(i) {
@@ -80,31 +84,33 @@ function showQuantity(i) {
 }
 
 // Update quantity with increase/decrease button
-function updateQuantity(i) {
-    increase.addEventListener('click', () => {
-        cartItems[i].quantity++;
-        localStorage.setItem('addedCameras', JSON.stringify(cartItems));
-        quantity.textContent = cartItems[i].quantity;
-        itemPrice.textContent = '$' + cartItems[i].quantity * cartItems[i].price / 100;
-        showTotalPrice();
 
-        if (cartItems[i].quantity > 1) {
-            decrease.removeAttribute('disabled');
+    increase.addEventListener('click', () => {
+        for (let i in cartItems) {
+            cartItems[i].quantity++;
+            quantity.textContent = cartItems[i].quantity;
+            itemPrice.textContent = '$' + cartItems[i].quantity * cartItems[i].price / 100;
+            if (cartItems[i].quantity > 1) {
+                decrease.removeAttribute('disabled');
+            }
         }
+        showTotalPrice();
+        localStorage.setItem('addedCameras', JSON.stringify(cartItems));
     });
 
     decrease.addEventListener('click', () => {
-        cartItems[i].quantity--;
-        localStorage.setItem('addedCameras', JSON.stringify(cartItems));
-        quantity.textContent = cartItems[i].quantity;
-        itemPrice.textContent = '$' + cartItems[i].quantity * cartItems[i].price / 100;
-        showTotalPrice();
-        
-        if (cartItems[i].quantity === 1) {
-            decrease.disabled = true;
+        for (let i in cartItems) {
+            cartItems[i].quantity--;
+            quantity.textContent = cartItems[i].quantity;
+            itemPrice.textContent = '$' + cartItems[i].quantity * cartItems[i].price / 100;
+            if (cartItems[i].quantity === 1) {
+                decrease.disabled = true;
+            }
         }
+        showTotalPrice();
+        localStorage.setItem('addedCameras', JSON.stringify(cartItems));
     });
-}
+
 
 
 // Append itemcontainers to cartcontainer
