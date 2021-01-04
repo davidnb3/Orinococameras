@@ -297,10 +297,14 @@ function checkValidation(order) {
         confirmOrder(order);
     } else {
         // Replace content
-        const errorMessage = document.createElement('p');
-        errorMessage.textContent = 'Please fill out every field!';
-        errorMessage.style.color = '#da9898';
-        formContainer.appendChild(errorMessage);
+        if(!document.querySelector('.error-message')) {
+            const errorMessage = document.createElement('p');
+            errorMessage.classList.add('error-message');
+            errorMessage.textContent = 'Please fill out every field!';
+            errorMessage.style.color = '#da9898';
+            formContainer.appendChild(errorMessage);
+            console.log('ok');
+        }
     }
 }
 
@@ -356,15 +360,20 @@ function showConfirmation(response) {
     let orderId = document.createElement('span');
     orderId.textContent = 'orderID: ' + response.orderId;
 
-    appendConfirmElements(confirmContainer, confirmHeader, confirmMessage, orderId);
+    let confirmPriceSum = getTotalPrice();
+    let confirmPrice = document.createElement('p');
+    confirmPrice.textContent = 'Total Price: ' + confirmPriceSum;
+
+    appendConfirmElements(confirmContainer, confirmHeader, confirmMessage, orderId, confirmPrice);
 };
 
 
-function appendConfirmElements(confirmContainer, confirmHeader, confirmMessage, orderId) {
+function appendConfirmElements(confirmContainer, confirmHeader, confirmMessage, orderId, confirmPrice) {
     let mainContainer = document.querySelector('main');
     confirmContainer.appendChild(confirmHeader);
     confirmContainer.appendChild(confirmMessage);
     confirmContainer.appendChild(orderId);
+    confirmContainer.appendChild(confirmPrice);
     mainContainer.appendChild(confirmContainer);
 };
 
