@@ -37,6 +37,9 @@ function createProductInfo(response) {
 
     // Set element attributes and textcontent
     img.setAttribute('src', imgSrc);
+    img.setAttribute('alt', response.name);
+    img.style.width = '800px';
+    img.style.height = '450px';
     h2.textContent = response.name;
     p1.textContent = response.description;
     p2.textContent = '$' + response.price / 100;
@@ -59,6 +62,8 @@ function createElements() {
 // Create form to select lenses and set the value for all options
 function lenseSelect(response) {
     formLabel.textContent = 'Choose your lense: ';
+    formLabel.setAttribute('for', 'select');
+    formSelect.setAttribute('id', 'select');
     for (let i in response.lenses) {
         const formOption = document.createElement('option');
         formOption.textContent = response.lenses[i];

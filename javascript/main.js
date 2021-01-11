@@ -45,12 +45,7 @@ function appendElements(a2, img, figcaption, a1, p, figure, gridContainer) {
 function setAttributesAndText(response, i, img, a1, a2, p) {
   const imgSrc = response[i].imageUrl;
   img.setAttribute('src', imgSrc);
-
-  let imgNr = 0;
-  for (let i in response) {
-    imgNr++;
-    img.setAttribute('alt', 'camera-' + imgNr[i]);
-  }
+  img.setAttribute('alt', response[i].name);
   a1.setAttribute('href', 'product.html?id=' + response[i]._id);
   a2.setAttribute('href', 'product.html?id=' + response[i]._id);
   a1.textContent = response[i].name;

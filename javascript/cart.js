@@ -73,10 +73,12 @@ function createElements() {
 function setAttributesAndText(itemContainer, itemImg, i, itemName, itemLense, itemPrice, removeBtn) {
     itemContainer.classList.add('cart-item');
     itemImg.setAttribute('src', cartItems[i].image);
+    itemImg.setAttribute('alt', cartItems[i].name);
     itemName.textContent = cartItems[i].name;
     itemLense.textContent = cartItems[i].lense;
     itemPrice.textContent = '$' + cartItems[i].quantity * cartItems[i].price / 100;
     removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+    removeBtn.setAttribute('aria-label', 'remove');
     removeBtn.classList.add('remove-btn');
     // Adding item id to use inside removeItem function
     itemContainer.setAttribute('id', cartItems[i].id);
@@ -86,7 +88,9 @@ function setAttributesAndText(itemContainer, itemImg, i, itemName, itemLense, it
 function showQuantity(qtyContainer, increase, decrease, quantity, i) {
     qtyContainer.classList.add('qty-container');
     increase.classList.add('fas', 'fa-chevron-up', 'increase');
+    increase.setAttribute('aria-label', 'increase');
     decrease.classList.add('fas', 'fa-chevron-down', 'decrease');
+    decrease.setAttribute('aria-label', 'decrease');
     quantity.textContent = cartItems[i].quantity;
 
     qtyContainer.appendChild(increase);
@@ -347,7 +351,6 @@ function showConfirmation(response) {
     btnContainer.style.display = 'none';
     formContainer.style.display = 'none';
     
-    console.log(response);
     let confirmContainer = document.createElement('div');
     confirmContainer.classList.add('confirmation', 'container');
 
