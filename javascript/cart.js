@@ -367,6 +367,9 @@ function showConfirmation(response) {
     let confirmPrice = document.createElement('p');
     confirmPrice.textContent = 'Total Price: ' + confirmPriceSum;
 
+    localStorage.removeItem('addedCameras');
+    updateCartWhenEmpty();
+
     appendConfirmElements(confirmContainer, confirmHeader, confirmMessage, orderId, confirmPrice);
 };
 
