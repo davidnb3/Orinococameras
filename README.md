@@ -1,7 +1,7 @@
 # Orinoco #
 
 
-Introduction.
+ - Introduction
 
 This is Project 5 from the Openclassrooms Web Developer Path. It's an e-commerce website including a list view page showing all the items, a single product page, a cart page and a confirmation page. 
 
