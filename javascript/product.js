@@ -38,8 +38,6 @@ function createProductInfo(response) {
     // Set element attributes and textcontent
     img.setAttribute('src', imgSrc);
     img.setAttribute('alt', response.name);
-    img.style.width = '800px';
-    img.style.height = '450px';
     h2.textContent = response.name;
     p1.textContent = response.description;
     p2.textContent = '$' + response.price / 100;
@@ -147,7 +145,7 @@ async function getProductInfo() {
         const promiseResponse = await promiseRequest;
         createProductInfo(promiseResponse);
     } catch (error) {
-        document.querySelector('.product-container').innerHTML = '<h2>Error</h2>'
+        document.querySelector('.product-container').innerHTML = '<h2>Server request failed</h2>'
     }
 };
 getProductInfo();
