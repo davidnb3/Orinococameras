@@ -245,6 +245,7 @@ main .product-container {
 main .product-container img {
   max-width: 800px;
   max-height: 450px;
+  width: 100%;
   border-radius: 10px;
 }
 
