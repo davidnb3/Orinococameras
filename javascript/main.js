@@ -68,7 +68,7 @@ async function requestPromise() {
     const promiseResponse = await promiseRequest;
     createProductFigure(promiseResponse);
   } catch (error) {
-    document.querySelector('main .container').innerHTML = '<h2 class="grid-heading">Error</h2>'
+    document.querySelector('main .container').innerHTML = '<h2 class="grid-heading">Server request failed</h2>'
   }
 };
 
