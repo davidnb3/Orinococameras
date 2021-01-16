@@ -39,6 +39,7 @@ window.onload = function showCartContent() {
             // Show and update quantity with increase/decrease button
             showQuantity(qtyContainer, increase, decrease, quantity, i);
             updateQuantity(increase, decrease, quantity, i, itemPrice);
+            disableDecreaseBtn(i, decrease);
 
             // Append itemcontainers to cartcontainer
             appendCartElements(itemContainer, itemImg, itemName, itemLense,
@@ -123,6 +124,17 @@ function updateQuantity(increase, decrease, quantity, i, itemPrice) {
             decrease.disabled = true;
         }
     });
+}
+
+function disableDecreaseBtn(i, decrease) {
+    if (cartItems[i].quantity > 1) {
+        decrease.removeAttribute('disabled');
+    }
+
+    if (cartItems[i].quantity < 2) {
+        decrease.disabled = true;
+    }
+
 }
 
 // Get total price from items in cart
@@ -300,14 +312,12 @@ function checkValidation(order) {
     if (checkValidation === true) {
         confirmOrder(order);
     } else {
-        // Replace content
         if(!document.querySelector('.error-message')) {
             const errorMessage = document.createElement('p');
             errorMessage.classList.add('error-message');
             errorMessage.textContent = 'Please fill out every field!';
             errorMessage.style.color = '#da9898';
             formContainer.appendChild(errorMessage);
-            console.log('ok');
         }
     }
 }
