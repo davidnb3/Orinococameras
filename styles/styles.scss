@@ -156,7 +156,7 @@ header .bg-header {
 
 /******/
 
-/*** Grid section ***/
+/*** List view page ***/
 
 main .grid-heading {
     text-align: center;
@@ -198,6 +198,7 @@ main .grid-container {
         }
     }
 }
+
 /******/
 
 /*** Product page ***/
@@ -342,11 +343,15 @@ main .form.container {
     }
 }
 
+/******/
+
+/*** Confirmation ***/
+
 main .confirmation.container {
     margin-top: 100px;
     display: flex;
+    text-align: center;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
     margin-bottom: 20px;
     * {
@@ -354,6 +359,9 @@ main .confirmation.container {
     }
     span {
         font-weight: bold;
+    }
+    ul {
+        list-style: none;
     }
 }
 
