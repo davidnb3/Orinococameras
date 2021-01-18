@@ -360,6 +360,10 @@ function showConfirmation(response) {
     cartContainer.style.display = 'none';
     btnContainer.style.display = 'none';
     formContainer.style.display = 'none';
+
+    sessionStorage.setItem('orderedCameras', JSON.stringify(cartItems));
+    let orderedCameras = JSON.parse(sessionStorage.getItem('orderedCameras'));
+    console.log(orderedCameras);
     
     let confirmContainer = document.createElement('div');
     confirmContainer.classList.add('confirmation', 'container');
@@ -373,22 +377,30 @@ function showConfirmation(response) {
     let orderId = document.createElement('span');
     orderId.textContent = 'orderID: ' + response.orderId;
 
+    let itemList = document.createElement('ul');
+    for (let i in orderedCameras) {
+        let orderedItem = document.createElement('li');
+        orderedItem.textContent = orderedCameras[i].quantity + ' x ' + orderedCameras[i].name + ' ' + orderedCameras[i].lense;
+        itemList.appendChild(orderedItem);
+    }
+
     let confirmPriceSum = getTotalPrice();
-    let confirmPrice = document.createElement('p');
+    let confirmPrice = document.createElement('span');
     confirmPrice.textContent = 'Total Price: ' + confirmPriceSum;
 
     localStorage.removeItem('addedCameras');
     updateCartWhenEmpty();
 
-    appendConfirmElements(confirmContainer, confirmHeader, confirmMessage, orderId, confirmPrice);
+    appendConfirmElements(confirmContainer, confirmHeader, confirmMessage, orderId, itemList, confirmPrice);
 };
 
 
-function appendConfirmElements(confirmContainer, confirmHeader, confirmMessage, orderId, confirmPrice) {
+function appendConfirmElements(confirmContainer, confirmHeader, confirmMessage, orderId, itemList, confirmPrice) {
     let mainContainer = document.querySelector('main');
     confirmContainer.appendChild(confirmHeader);
     confirmContainer.appendChild(confirmMessage);
     confirmContainer.appendChild(orderId);
+    confirmContainer.appendChild(itemList)
     confirmContainer.appendChild(confirmPrice);
     mainContainer.appendChild(confirmContainer);
 };
