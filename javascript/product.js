@@ -29,6 +29,17 @@ function makeRequest() {
     })
 };
 
+async function getProductInfo() {
+    try {
+        const promiseRequest = makeRequest();
+        const promiseResponse = await promiseRequest;
+        createProductInfo(promiseResponse);
+    } catch (error) {
+        document.querySelector('.product-container').innerHTML = '<h2>Server request failed</h2>'
+    }
+};
+getProductInfo();
+
 // Create all the content for the product page
 function createProductInfo(response) {
     const imgSrc = response.imageUrl;
@@ -90,7 +101,7 @@ function addToCart(response) {
             'image': response.imageUrl,
             'id': response._id,
             'name': response.name, 
-            'lense': formSelect.value, 
+            'lense': formSelect.value,
             'price': response.price,
             'quantity': 1
         }
@@ -100,6 +111,7 @@ function addToCart(response) {
 
         updateLocalstorage(addedCameras, product);
 
+        // Display message
         const message = document.createElement('p');
         message.textContent = product.name + ' succesfully added to cart!'
         message.style.color = '#a0522d';
@@ -113,42 +125,32 @@ function updateLocalstorage(addedCameras, product) {
     if (addedCameras == null) {
         let addedCameras = [];
         addedCameras.push(product);
-        /* Repeated code.. and function doesn't work */
         saveToLocalstorage(addedCameras);
     }
 
     let checkId = false;
+
     for (let i in addedCameras) {
         // Check if ID already present, if yes add 1 quantity
-        if (addedCameras[i].id === product.id) {
+        if (addedCameras[i].id === product.id && addedCameras[i].lense === product.lense) {
             addedCameras[i].quantity += 1;
             saveToLocalstorage(addedCameras);
             checkId = true;
-
         }
-    }
 
     // If ID is not present, add new product to LS
     if (addedCameras != null && checkId === false) {
         addedCameras.push(product);
         saveToLocalstorage(addedCameras);
+        }
     }
 }
+
 
 function saveToLocalstorage(addedCameras) {
     localStorage.setItem('addedCameras', JSON.stringify(addedCameras));
 }
 
-async function getProductInfo() {
-    try {
-        const promiseRequest = makeRequest();
-        const promiseResponse = await promiseRequest;
-        createProductInfo(promiseResponse);
-    } catch (error) {
-        document.querySelector('.product-container').innerHTML = '<h2>Server request failed</h2>'
-    }
-};
-getProductInfo();
 
 
 
