@@ -29,7 +29,7 @@ window.onload = function showCartContent() {
 
         // Loop over added items to show them inside cart
         for (let i in cartItems) {
-            // Create all necessary elements to pass them to other functions below
+            // Create all necessary elements
             let {itemContainer, itemImg, itemName, itemLense, itemPrice, removeBtn,
                 qtyContainer, increase, quantity, decrease} = createElements();
             
@@ -85,7 +85,7 @@ function setAttributesAndText(itemContainer, itemImg, i, itemName, itemLense, it
     itemContainer.setAttribute('id', cartItems[i].id);
 }
 
-// Show quantity with increase/decrease button
+// Show quantity and increase/decrease button
 function showQuantity(qtyContainer, increase, decrease, quantity, i) {
     qtyContainer.classList.add('qty-container');
     increase.classList.add('fas', 'fa-chevron-up', 'increase');
@@ -141,7 +141,6 @@ function disableDecreaseBtn(i, decrease) {
 function getTotalPrice() {
     let total = 0;
     for (let i in cartItems) {
-        // if price = 0...
         total += cartItems[i].quantity * cartItems[i].price / 100;
     }
     return '$' + total;
@@ -181,7 +180,6 @@ function removeItem(removeBtn, itemContainer) {
         let product_id = itemContainer.getAttribute('id');
         
         itemContainer.remove();
-
         // Loop through cartItems to just remove itemcontainer with corresponding id
         for (let i = 0; i < cartItems.length; i++) {
             if (cartItems[i].id == product_id) {
@@ -356,15 +354,15 @@ async function confirmOrder(order) {
 
 // Display order confirmation 
 function showConfirmation(response) {
-    // Remove from localstorage
     cartContainer.style.display = 'none';
     btnContainer.style.display = 'none';
     formContainer.style.display = 'none';
 
+    // Save ordered items to sessionstorage
     sessionStorage.setItem('orderedCameras', JSON.stringify(cartItems));
     let orderedCameras = JSON.parse(sessionStorage.getItem('orderedCameras'));
-    console.log(orderedCameras);
     
+    // Create all confirmation elements
     let confirmContainer = document.createElement('div');
     confirmContainer.classList.add('confirmation', 'container');
 
@@ -388,6 +386,7 @@ function showConfirmation(response) {
     let confirmPrice = document.createElement('span');
     confirmPrice.textContent = 'Total Price: ' + confirmPriceSum;
 
+    // Remove from localstorage
     localStorage.removeItem('addedCameras');
     updateCartWhenEmpty();
 

@@ -1,5 +1,5 @@
 
-// Request data from server and return a promise
+// Request data from server
 function makeRequest() {
   return new Promise((resolve, reject) => {
     let request = new XMLHttpRequest();
@@ -9,13 +9,26 @@ function makeRequest() {
         if(request.status === 200) {
           resolve(JSON.parse(request.response));
         } else {
-          reject('Server not responding');
+          reject('Sorry, something went wrong.');
         }
       }
     }
     request.send();
   });
 };
+
+async function requestPromise() {
+  try {
+    const promiseRequest = makeRequest();
+    const promiseResponse = await promiseRequest;
+    createProductFigure(promiseResponse);
+  } catch (error) {
+    document.querySelector('main .container').innerHTML = '<h3 class="grid-heading">' + error + '</h3>';
+  }
+};
+
+requestPromise();
+
 
 // Create all the content for the product page
 function createProductFigure(response) {
@@ -62,15 +75,5 @@ function createElements() {
   return { img, a1, a2, p, figcaption, figure };
 }
 
-async function requestPromise() {
-  try {
-    const promiseRequest = makeRequest();
-    const promiseResponse = await promiseRequest;
-    createProductFigure(promiseResponse);
-  } catch (error) {
-    document.querySelector('main .container').innerHTML = '<h2 class="grid-heading">Server request failed</h2>'
-  }
-};
 
-requestPromise();
 
