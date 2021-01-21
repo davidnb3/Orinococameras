@@ -29,6 +29,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 3px;
   min-width: 150px;
+  cursor: pointer;
 }
 
 .shop-now-btn:active, .clear-cart-btn:active, .add-to-cart-btn:active, .submit:active {
@@ -253,6 +254,11 @@ main .product-container h2, main .product-container p {
   margin: 20px 0;
 }
 
+main .product-container h3 {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
 main .product-container form select {
   border-radius: 5px;
   border: none;
@@ -338,12 +344,14 @@ main .cart.container .cart-item .remove-btn {
   background-color: #da9898;
   border: none;
   outline: none;
+  cursor: pointer;
 }
 
 main .cart.container .cart-item .increase, main .cart.container .cart-item .decrease {
   background-color: #ebe6e0;
   outline: none;
   border: none;
+  cursor: pointer;
 }
 
 main .button.container {
