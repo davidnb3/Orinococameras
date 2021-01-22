@@ -18,7 +18,7 @@ const totalPrice = document.createElement('p');
 
 // SHOW CART CONTENT
 // Main function
-window.onload = function showCartContent() {
+function showCartContent() {
     if (localStorage.getItem('addedCameras') != null) {
         cartHeader.textContent = 'Your Cart';
 
@@ -53,6 +53,9 @@ window.onload = function showCartContent() {
         cartHeader.textContent = 'Your Cart is empty';
     };
 };
+
+showCartContent();
+
 
 // Create all necessary elements to pass them to other functions
 function createElements() {
@@ -102,6 +105,7 @@ function showQuantity(qtyContainer, increase, decrease, quantity, i) {
 // Update quantity with increase/decrease button
 function updateQuantity(increase, decrease, quantity, i, itemPrice) {
     increase.addEventListener('click', () => {
+        console.log(cartItems);
         cartItems[i].quantity++;
         localStorage.setItem('addedCameras', JSON.stringify(cartItems));
         quantity.textContent = cartItems[i].quantity;
@@ -114,6 +118,7 @@ function updateQuantity(increase, decrease, quantity, i, itemPrice) {
     });
 
     decrease.addEventListener('click', () => {
+        console.log(cartItems);
         cartItems[i].quantity--;
         localStorage.setItem('addedCameras', JSON.stringify(cartItems));
         quantity.textContent = cartItems[i].quantity;
