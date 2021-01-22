@@ -264,6 +264,7 @@ main .product-container form select {
   border: none;
   height: 20px;
   margin-left: 20px;
+  width: 100px;
 }
 
 /******/
