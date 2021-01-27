@@ -280,6 +280,8 @@ submitBtn.addEventListener('click', (event) => {
 
     if (email.value == "") {
         email.style.border = 'medium solid #da9898';
+    } else if (!emailRegex.test(email.value)) {
+        alert('Please use a correct Email');
     }
 
     let contact = {
