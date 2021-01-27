@@ -125,7 +125,6 @@ function updateLocalstorage(addedCameras, product) {
     if (addedCameras == null) {
         let addedCameras = [];
         addedCameras.push(product);
-        /* Repeated code.. and function doesn't work */
         saveToLocalstorage(addedCameras);
     }
 
