@@ -38,7 +38,7 @@ function showCartContent() {
 
             // Show and update quantity with increase/decrease button
             showQuantity(qtyContainer, increase, decrease, quantity, i);
-            updateQuantity(increase, decrease, quantity, i, itemPrice);
+            updateQuantity(increase, decrease, quantity, itemPrice, itemContainer);
             disableDecreaseBtn(i, decrease);
 
             // Append itemcontainers to cartcontainer
@@ -103,29 +103,29 @@ function showQuantity(qtyContainer, increase, decrease, quantity, i) {
 }
 
 // Update quantity with increase/decrease button
-function updateQuantity(increase, decrease, quantity, i, itemPrice) {
+function updateQuantity(increase, decrease, quantity, itemPrice, itemContainer) {
+    let productId = itemContainer.getAttribute('id');
+    let camera = cartItems.find(product => product.id === productId);
+    
     increase.addEventListener('click', () => {
-        console.log(cartItems);
-        cartItems[i].quantity++;
+        camera.quantity++;
         localStorage.setItem('addedCameras', JSON.stringify(cartItems));
-        quantity.textContent = cartItems[i].quantity;
-        itemPrice.textContent = '$' + cartItems[i].quantity * cartItems[i].price / 100;
+        quantity.textContent = camera.quantity;
+        itemPrice.textContent = '$' + camera.quantity * camera.price / 100;
         showTotalPrice();
-
-        if (cartItems[i].quantity > 1) {
+        if (camera.quantity > 1) {
             decrease.removeAttribute('disabled');
         }
     });
 
     decrease.addEventListener('click', () => {
-        console.log(cartItems);
-        cartItems[i].quantity--;
+        camera.quantity--;
         localStorage.setItem('addedCameras', JSON.stringify(cartItems));
-        quantity.textContent = cartItems[i].quantity;
-        itemPrice.textContent = '$' + cartItems[i].quantity * cartItems[i].price / 100;
+        quantity.textContent = camera.quantity;
+        itemPrice.textContent = '$' + camera.quantity * camera.price / 100;
         showTotalPrice();
 
-        if (cartItems[i].quantity < 2) {
+        if (camera.quantity < 2) {
             decrease.disabled = true;
         }
     });
