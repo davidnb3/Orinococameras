@@ -5,7 +5,7 @@
 
 This is Project 5 from the Openclassrooms Web Developer Path. It's an e-commerce website including a list view page showing all the items, a single product page, a cart page and a confirmation page. 
 
-The server was already built by the OCC team, so my mission was to get all the data from the server using GET requests to show the products on the list view page and to use URL query parameters to create a single product page for all the various items. 
+The server was already built by the OC team, so my mission was to get all the data from the server using GET requests to show the products on the list view page and to use URL query parameters to create a single product page for all the various items. 
 
 I used the localstorage JS functionality to save and add the products to the cart, and redirected the user to a confirmation page by sending a POST request to the server with validated contact details.
 
